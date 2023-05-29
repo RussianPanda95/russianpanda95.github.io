@@ -26,7 +26,7 @@ hero:
 contact:
   email: cyberninja956@gmail.com # Add your email for contact form
   logo: '/images/02.png'
-  description: You can shoot me a message using this form if you have any questions or suggetions. # Add a description of your form
+  description: You can shoot me a message using this form if you have any questions or suggestions. # Add a description of your form
 
 # NOTE
 # Norlin theme comes with a contact form built-in. You can use this form with Formspree (https://formspree.io/) service and get up to 50 submissions for free. Also, you can easily switch to another service if you want.
