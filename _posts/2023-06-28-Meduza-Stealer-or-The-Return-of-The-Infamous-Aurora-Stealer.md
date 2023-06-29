@@ -9,7 +9,7 @@ image:  '/images/Meduza-Stealer/01.jpeg'
 
 Meduza Stealer ... Yes, you read it right, I did not mispelled it, is a new stealer that appeared on Russian-speaking forums at the beginning of June 2023. The stealer is written in C++ and is approximately 600KB in size. The DLL dependencies are statically linked to the binary, which reduces the detection. It's also worth noting that the collected logs are not stored on the disk. 
 
-![meduza1.jpg](/images/Meduza-Stealer/meduza1.jpg)
+![meduza1.JPG](/images/Meduza-Stealer/meduza1.JPG)
 
 The stealer collects the data from 100 browsers which includes Chromium and Gecko browsers. 
 
@@ -40,13 +40,13 @@ The stealer is priced at:
 
 Meduza Stealer does not work in CIS (Commonwealth of Independent States) countries. 
 
-![update.jpg](/images/Meduza-Stealer/update.jpg)
+![update.JPG](/images/Meduza-Stealer/update.JPG)
 
 P.S: if anyone has the newest version of the stealer, please reach out to me ;)
 
 An example of the received logs is shown below.
 
-![logexample.jpg](/images/Meduza-Stealer/logexample.jpg)
+![logexample.JPG](/images/Meduza-Stealer/logexample.JPG)
 
 # Technical Analysis
 
@@ -244,38 +244,38 @@ As mentioned before, the panel handles the parsing and decryption of the collect
 Interestingly enough, we can also see the path of the Meduza Stealer's source code:
 **C:\\Users\\79026\\source\\repos\\MedusaServer\\Src\\Core\\Parser\\Chromium.cpp**
 
-![ChromiumParser.jpg](/images/Meduza-Stealer/ChromiumParser.jpg)
+![ChromiumParser.JPG](/images/Meduza-Stealer/ChromiumParser.JPG)
 
 Meduza Stealer performs panel hash verification as a part of the panel authentication/registration process. It queries the hash value assigned to **PanelHash** under **Computer\HKEY_CURRENT_USER\SOFTWARE\Medusa**. 
 
-![hashverif.jpg](/images/Meduza-Stealer/hashverif.jpg)
+![hashverif.JPG](/images/Meduza-Stealer/hashverif.JPG)
 
-![panelreg.jpg](/images/Meduza-Stealer/panelreg.jpg)
+![panelreg.JPG](/images/Meduza-Stealer/panelreg.JPG)
 
 Below is the mention of the log folder creation and builder output to notify that the main socket is listening on port 15666. Please note that the port is static and cannot be changed at this time.
 
-![aurorainit.jpg](/images/Meduza-Stealer/aurorainit.jpg)
+![aurorainit.JPG](/images/Meduza-Stealer/aurorainit.JPG)
 
 
 Have you noticed that there is a mention of AuroraStealer.cpp? Also, if you compare the logs for Aurora and Meduza stealers. I wrote a blog on Aurora Stealer if you want to check it out [here](https://www.esentire.com/blog/esentire-threat-intelligence-malware-analysis-aurora-stealer). I am not aware of any Aurora Stealer source code leaks so far. But if you know of any, I would love to hear about it.
 
-![aurora-meduza.jpg](/images/Meduza-Stealer/aurora-meduza.jpg)
+![aurora-meduza.JPG](/images/Meduza-Stealer/aurora-meduza.JPG)
 
 Moreover, there is also a slight overlap in Telegram logs layout. 
 
-![tglogs.jpg](/images/Meduza-Stealer/tglogs.jpg)
+![tglogs.JPG](/images/Meduza-Stealer/tglogs.JPG)
 
 The code below is responsible for creating folders for gathered logs that are then archived.
 
-![fldcreate.jpg](/images/Meduza-Stealer/fldcreate.jpg)
+![fldcreate.JPG](/images/Meduza-Stealer/fldcreate.JPG)
 
 In the code snippet below, you can see that the pointers to the vftables (virtual function tables) of classes, such as GeckoParser, SteamDecoder, TelegramParser, DiscordParser, and SystemParser are being assigned. These vftables act as a "lookup table" for the corresponding objects' virtual functions. When a virtual function is invoked on an object, the stealer will refer to the appropriate vftable based on the object's type at runtime to determine the specific implementation of the function to execute, for example, parsing the system information collected. 
 
-![vftable.jpg](/images/Meduza-Stealer/vftable.jpg)
+![vftable.JPG](/images/Meduza-Stealer/vftable.JPG)
 
 The stealer uses **vpxor** and **pxor** instructions to perform Vector Packed Bitwise XOR and Packed XOR operations on strings. The **xor** instruction in x86 assembly language performs a bitwise XOR operation between two operands, which can be registers or memory locations. It operates on single data elements rather than vectorized data. On the other hand, **vpxor** and **pxor** instructions are specifically designed for SIMD operations (Single instruction, multiple data), where multiple data elements are processed simultaneously in parallel. These instructions allow for parallel execution of XOR operations on packed data and can significantly improve performance in scenarios that involve processing large amounts of data in parallel.
 
-![pxor.jpg](/images/Meduza-Stealer/pxor.jpg)
+![pxor.JPG](/images/Meduza-Stealer/pxor.JPG)
 
 The stealer retrieves the information about the native system and version information using **RtlGetVersion** and **GetNativeSystemInfo** functions accordingly and then parses the retrieved information based on the following decrypted strings:
 
@@ -302,35 +302,35 @@ The stealer retrieves the information about the native system and version inform
 - Windows Essential Server Solution Additional
 - Professional Education
 
-![getsysinfo.jpg](/images/Meduza-Stealer/getsysinfo.jpg)
+![getsysinfo.JPG](/images/Meduza-Stealer/getsysinfo.JPG)
 
 Meduza Stealer reaches out to https://api.ipify.org to determine the public IP of the infected machine.
 
 The code below retrieves and processes geographic information based on the user's location and then appends the result to "geo" tag. 
 
-![geo.jpg](/images/Meduza-Stealer/geo.jpg)
+![geo.JPG](/images/Meduza-Stealer/geo.JPG)
 
 The time zone information is retrieved via accessing the registry key **SYSTEM\CurrentControlSet\Control\TimeZoneInformation** and calling the function **TimeZoneKeyName**.
 
-![timezone.jpg](/images/Meduza-Stealer/timezone.jpg)
+![timezone.JPG](/images/Meduza-Stealer/timezone.JPG)
 
 Telegram presence on the host is checked via the registry key **SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{53F49750-6209-4FBF-9CA8-7A333C87D1ED}_is1**, specifically the **InstallLocation** value.
 
-![teg_reg_key.jpg](/images/Meduza-Stealer/teg_reg_key.jpg)
+![teg_reg_key.JPG](/images/Meduza-Stealer/teg_reg_key.JPG)
 
 ### C2 Communication
 
 C2 communication is super similar to Aurora Stealer. It is base64-encoded and parsed in a JSON format. As mentioned before, the stealer communicates with the server over the default port 15666.
 
-![traffic.jpg](/images/Meduza-Stealer/traffic.jpg)
+![traffic.JPG](/images/Meduza-Stealer/traffic.JPG)
 
 # Summary 
 
 Meduza Stealer developers also offer malware development services based on C/C++, Java, JavaScript/TypeScript, Kotlin (JVM), and Python programming languages. (No mention of GoLang? :) ). We might never find out the truth, but it is highly likely that Aurora Stealer developers are also behind Meduza Stealer.
 
-![medusaservice.jpg](/images/Meduza-Stealer/medusaservice.jpg)
+![medusaservice.JPG](/images/Meduza-Stealer/medusaservice.JPG)
 
-![AURORASVC.jpg](/images/Meduza-Stealer/AURORASVC.jpg)
+![AURORASVC.JPG](/images/Meduza-Stealer/AURORASVC.JPG)
 
 According to Abaddon, who specializes in providing services similar to the Eye of God (one of the Russian Internet’s main data-leak hubs), the Botnet project was the reason Aurora left the market unexpectedly and taking its servers down; it failed to meet users' expectations and delivered many promises for the product that they could not handle. It is worth mentioning that Aurora priced the botnet at 700$ for a month and 3000$ for lifetime access.
    
@@ -1103,7 +1103,7 @@ for addr, data in addr_to_data.items():
 
 I was also inspired by [@herrcore](https://twitter.com/herrcore) research with [Unicorn Engine implementation](https://research.openanalysis.net/risepro/stealer/config/triage/2023/06/15/risepro.html) and wrote the configuration extractor that grabs the C2 and build name on most samples. The extractor was written using Unicorn Engine and Python. It was my first time messing with Unicorn Engine, so any feedback is welcome. 
 
-![config_extract.jpg](/images/Meduza-Stealer/config_extract.jpg)
+![config_extract.JPG](/images/Meduza-Stealer/config_extract.JPG)
 
 You can grab the configuration from my [GitHub page](https://github.com/RussianPanda95/Configuration_extractors/blob/main/meduza_stealer_config_extractor.py) as well.
 
