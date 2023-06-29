@@ -1103,7 +1103,7 @@ for addr, data in addr_to_data.items():
 
 I was also inspired by [@herrcore](https://twitter.com/herrcore) research with [Unicorn Engine implementation](https://research.openanalysis.net/risepro/stealer/config/triage/2023/06/15/risepro.html) and wrote the configuration extractor that grabs the C2 and build name on most samples. The extractor was written using Unicorn Engine and Python. It was my first time messing with Unicorn Engine, so any feedback is welcome. 
 
-![config_extract.JPG](/images/Meduza-Stealer/config_extract.JPG)
+![config_extract.jpg](/images/Meduza-Stealer/config_extract.jpg)
 
 You can grab the configuration from my [GitHub page](https://github.com/RussianPanda95/Configuration_extractors/blob/main/meduza_stealer_config_extractor.py) as well.
 
