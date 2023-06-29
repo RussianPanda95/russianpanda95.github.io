@@ -8,6 +8,33 @@
   <link rel="canonical" href="{{ page.url | replace:'index.html','' | absolute_url }}">
   <link rel="alternate" type="application/rss+xml" title="{{ site.title | escape }}" href="{{ "/feed.xml" | relative_url }}">
 
+  <!-- Open Graph meta tags -->
+  {% if page.image %}
+  <meta property="og:image" content="{{ site.baseurl }}{{ page.image }}">
+  {% endif %}
+  <meta property="og:title" content="{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}">
+  <meta property="og:description" content='{% if page.description %}{{ page.description | strip_html | strip_newlines | truncate: 160 }}{% else %}{{ site.description }}{% endif %}'>
+  <meta property="og:url" content="{{ page.url | replace:'index.html','' | absolute_url }}">
+  <meta property="og:type" content="website">
+  <!-- End of Open Graph meta tags -->
+
+  <!-- Facebook Meta Tags -->
+  <meta property="og:url" content="https://russianpanda.com/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="RussianPanda Research Blog">
+  <meta property="og:description" content="undefined">
+  <meta property="og:image" content="">
+
+  <!-- Twitter Meta Tags -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta property="twitter:domain" content="russianpanda.com">
+  <meta property="twitter:url" content="https://russianpanda.com/">
+  <meta name="twitter:title" content="RussianPanda Research Blog">
+  <meta name="twitter:description" content="undefined">
+  <meta name="twitter:image" content="">
+
+  <!-- Meta Tags Generated via https://www.opengraph.xyz -->
+
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
 
