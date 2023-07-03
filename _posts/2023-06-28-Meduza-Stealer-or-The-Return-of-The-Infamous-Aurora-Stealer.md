@@ -7,7 +7,7 @@ image:  '/images/Meduza-Stealer/01.jpeg'
 ---
 # Meduza's Gaze
 
-Meduza Stealer ... Yes, you read it right, I did not mispelled it, is a new stealer that appeared on Russian-speaking forums at the beginning of June 2023. The stealer is written in C++ and is approximately 600KB in size. The DLL dependencies are statically linked to the binary, which reduces the detection. It's also worth noting that the collected logs are not stored on the disk. 
+Meduza Stealer ... Yes, you read it right, I did not misspelled it, is a new stealer that appeared on Russian-speaking forums at the beginning of June 2023. The stealer is written in C++ and is approximately 600KB in size. The DLL dependencies are statically linked to the binary, which reduces the detection. It's also worth noting that the collected logs are not stored on the disk. 
 
 ![meduza1.JPG](/images/Meduza-Stealer/meduza1.JPG)
 
@@ -1134,7 +1134,7 @@ You can grab the configuration from my [GitHub page](https://github.com/RussianP
 {% highlight liquid %}
 rule MeduzaStealer {
 	meta:
-		author = "RussianPanda
+		author = "RussianPanda"
 		description = "Detects MeduzaStealer" 
 		date = "6/27/2023"
 
