@@ -305,7 +305,7 @@ Redline for comparison:
 
 So how do you differentiate between two stealers if they are very similar? That's right, the easiest way is probably based on traffic. The traffic for MetaStealer would slightly be different than for Redline Stealer. MetaStealer would have the indicator **hxxp://tempuri.org/Contract/MSValue1** as well as **MSValue1**, **MSValue2**, etc., whereas Redline Stealer will have **hxxp://tempuri.org/Entity/Id1.net** as well as Id1, Id2, etc. 
 
-As for the binary, we can also look for Id*, MSValue*, Entity*, MSObject* patterns like in the screenshot below:
+As for the binary, we can also look for Id, MSValue, Entity, MSObject patterns like in the screenshot below:
 
 ![comparison.png](/images/MetaStealer/comparison.png)
 
