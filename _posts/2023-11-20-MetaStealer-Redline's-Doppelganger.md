@@ -10,13 +10,13 @@ image: /images/MetaStealer/meta_header.png
 
 MetaStealer made its debut on Russian hacking forums on March 7, 2022. The stealer is said to incorporate the functionality, code, and panel of Redline Stealer. The developer claims to have improved the stub of the payload. It is priced at $150 per month, mirroring the price of Redline Stealer.
 
-![meta-ads.jpg](/images/MetaStealer/meta-ads.jpg)
+![meta-ads.jpg](/images/MetaStealer/meta-ads.JPG)
 
 **Note:** Some samples of MetaStealer have been found in sandbox platforms like Triage, Joe Sandbox, Any.run and classified as Redline or ["another" MetaStealer"](https://malpedia.caad.fkie.fraunhofer.de/details/win.metastealer) that appears to be written in C++. You can find an example [here](https://tria.ge/231027-nzmhssfg49/behavioral2). Additionally, SentinelOne has [reported](https://www.sentinelone.com/blog/macos-metastealer-new-family-of-obfuscated-go-infostealers-spread-in-targeted-attacks/) a separate MetaStealer targeting MacOS devices that is written in Golang. It's important to note that these are not the same malware variants. To clarify, the MetaStealer I am analyzing is written in C#.
 
 The developer of MetaStealer actively advertises **crypter[.]guru** crypting services for their stealer users, as can be seen in the screenshot below.
 
-![crypt_guru.jpg](/images/MetaStealer/crypt_guru.jpg)
+![crypt_guru.jpg](/images/MetaStealer/crypt_guru.JPG)
 
 I will provide a brief overview of some of the stealer's functionalities, but we won't delve into extensive detail as it shares many similarities with Redline Stealer. For a more comprehensive analysis, you can refer to my Redline writeup [here](https://www.esentire.com/blog/esentire-threat-intelligence-malware-analysis-redline-stealer)
 
@@ -24,12 +24,12 @@ I will provide a brief overview of some of the stealer's functionalities, but we
 
 The generated MetaStealer build is automatically obfuscated with Confuser Core 1.6.0. Notably, the binary description contains the text "METRO 2022 Dev," suggesting that the malware developer may be a fan of the Metro franchise :)
 
-![file_sig.jpg](/images/MetaStealer/file_sig.jpg)
+![file_sig.jpg](/images/MetaStealer/file_sig.JPG)
 
 I proceeded with cleaning up the sample a bit to make it more readable and reversible. We go to the entry point of the binary and notice some interesting code within class "MainFrm" and "ReadLine" methods. Within "ReadLine" method, we see a **while** loop that continues as long as a boolean variable **flag** is **false**.
 Inside this loop, it calls **StringDecrypt.Read(Arguments.IP, Arguments.Key)**, which retrieves two arguments **IP** and **key**. The retrieved data is split into an array of strings using the  "|" character as a delimiter.
 
-![readline_method.jpg](/images/MetaStealer/readline_method.jpg)
+![readline_method.jpg](/images/MetaStealer/readline_method.JPG)
 
 The **Read** method takes two string parameters, **b64** and **stringKey**. The method first checks if the **b64** parameter is null, empty, or consists only of white-space characters (**if (string.IsNullOrWhiteSpace(b64))**. If **b64** is not null or white-space, the method performs a series of operations:
 
@@ -37,7 +37,7 @@ The **Read** method takes two string parameters, **b64** and **stringKey**. The 
 - It then applies an XOR operation to the decoded string using **stringKey** as the key.
 - The result of the XOR operation is then decoded again from Base64 format. 
 
-![read_method.jpg](/images/MetaStealer/read_method.jpg)
+![read_method.jpg](/images/MetaStealer/read_method.JPG)
 
 Looking at the Arguments table, we can see some interesting base64-encoded strings:
 
