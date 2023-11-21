@@ -41,17 +41,17 @@ The **Read** method takes two string parameters, **b64** and **stringKey**. The 
 
 Looking at the Arguments table, we can see some interesting base64-encoded strings:
 
-![arguments_table.jpg](/images/MetaStealer/arguments_table.jpg)
+![arguments_table.jpg](/images/MetaStealer/arguments_table.JPG)
 
 This is **StringDecrypt** class, where XOR decryption takes place:
 
-![xor_fn.jpg](/images/MetaStealer/xor_fn.jpg)
+![xor_fn.jpg](/images/MetaStealer/xor_fn.JPG)
 
 For each character in **input**, it performs an XOR operation with the corresponding character in **stringKey** as shown in the Arguments table. The index for **stringKey** is determined by **i % stringKey.Length**, ensuring that if **stringKey** is shorter than **input**, it will repeat from the very beginning. The exact similar string encryption is used for Redline as well.
 
 Upon decrypting the string in CyberChef, we get the C2 IP and the port number.
 
-![cyberchef.jpg](/images/MetaStealer/cyberchef.jpg)
+![cyberchef.jpg](/images/MetaStealer/cyberchef.JPG)
 
 Next, we will look at **method_03**. The code is responsible for setting up network communication. 
 - It attempts to establish a network channel to a remote endpoint specified by the **address** argument. This involves creating a [**ChannelFactory**](https://learn.microsoft.com/en-us/dotnet/api/system.servicemodel.channelfactory?view=dotnet-plat-ext-7.0) with a specific binding and endpoint address.
@@ -59,15 +59,15 @@ Next, we will look at **method_03**. The code is responsible for setting up netw
 - Next, it adds an "Authorization" message header with a hardcoded value (token/key) that is likely for authentication purposes (for example, **{xmlns="ns1">ead3f92ffddf3eebb6b6d82958e811a0}**)
 - It then returns **true** if the connection setup is successful, **false** if any exception occurs
 
-![method_3_comms.jpg](/images/MetaStealer/method_3_comms.jpg)
+![method_3_comms.jpg](/images/MetaStealer/method_3_comms.JPG
 
 **method_0** contains **MSValue1**, which is a call to a method on a WCF (Windows Communication Foundation) service channel and the **connector** object is a proxy facilitating the remote method invocation.
 
-![MSValue1.jpg](/images/MetaStealer/MSValue1.jpg)
+![MSValue1.jpg](/images/MetaStealer/MSValue1.JPG)
 
 Next, we will reach **method_2**:
 
-![method2.jpg](/images/MetaStealer/method2.jpg)
+![method2.jpg](/images/MetaStealer/method2.JPG)
 
 It calls **this.connector.OnGetSettings()**, which seems to be a method call to obtain some data from C2. The result is assigned to the **msobject** variable.
 **OnGetSettings** method is responsible for retrieving settings data and packaging it into an instance of the **MSObject18** class. 
@@ -247,15 +247,15 @@ Let's look at the Redline sample where it stores the configuration from the samp
 Next, MetaStealer proceeds with decrypting the binary ID, which is the same XOR algorithm described earlier for retrieving the IP address.
 Further down, I stumbled across the code that is responsible for extracting the data from the byte array and performing the string replacement. Thanks [@cod3nym](https://twitter.com/cod3nym) for pointing out that it's part of ConfuserEx default constant encryption runtime. 
 
-![confuserex.jpg](/images/MetaStealer/confuserex.jpg)
+![confuserex.jpg](/images/MetaStealer/confuserex.JPG)
 
 Some of the retrieved strings are then getting replaced:
 
-![str_replace 1.jpg](/images/MetaStealer/str_replace.jpg)
+![str_replace 1.jpg](/images/MetaStealer/str_replace.JPG)
 
 The stealer retrieves the memory with the WMI query **SELECT * FROM Win32_OperatingSystem**. Next, it retrieves the Windows version via the registry:
 
-![winversion.jpg](/images/MetaStealer/winversion.jpg)
+![winversion.jpg](/images/MetaStealer/winversion.JPG)
 
 Interestingly enough, the stealer checks if the directory at the **AppData\\Local\\ElevatedDiagnostics** path exists. If the directory does not exist, it creates the directory. If the directory exists, it then checks if it was created more than 14 days ago (by comparing the directory's creation time to the current time minus 14 days). If the directory is older than 14 days, it deletes and recreates it. This stealer might be trying to clean up old diagnostic reports to hide any traces of execution. 
 
@@ -265,7 +265,7 @@ The code below is  responsible for screenshot capture.
 - **GetImageBase** method is designed to capture an image of the virtual display. First, it retrieves the virtual display size using the **GetVirtualDisplaySize** method. It then creates a new **Bitmap** object with the dimensions of the virtual display.
 - **ConvertToBytes** method is used to convert an **Image** object to a byte array, presumably for storage or transmission. If the provided image is not null, it saves the image into a **MemoryStream** in PNG format. The contents of the memory stream are then converted to a byte array.
 
-![get_Screenshot.jpg](/images/MetaStealer/get_Screenshot.jpg)
+![get_Screenshot.jpg](/images/MetaStealer/get_Screenshot.JPG)
 
 MetaStealer uses the WMI query **SELECT * FROM Win32_DiskDrive** to retrieve information (Serial number) of the physical disk drives.
 
@@ -281,13 +281,13 @@ The stealer then proceeds with enumerating the directories for VPN apps such as 
 
 The stealer retrieves information about running processes via the query **SELECT * FROM Win32_Process Where SessionId='"** as well as the command line for each process:
 
-![running_proc.jpg](/images/MetaStealer/running_proc.jpg)
+![running_proc.jpg](/images/MetaStealer/running_proc.JPG)
 
 **Search** method is responsible for searching for files within certain directories (Windows, Program Files, Program Files (x86)). The BaseDirectory is where the search begins, for example, "C:\\Users\\username\\AppData\\Local\Battle.net". 
 
 **GetBrowser** method gets the information on the installed browsers on the infected machine. 1. It attempts to access the Windows Registry to retrieve information about web browsers installed on the system. It opens a specific Registry key path under **HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\Clients\StartMenuInternet** This key is used to store information about web browsers on 64-bit Windows systems. If the first attempt to open the key is unsuccessful, it falls back to opening a similar key path without the "WOW6432Node" part under **HKEY_LOCAL_MACHINE\SOFTWARE\Clients\StartMenuInternet** (32-bit Windows systems). After successfully opening the appropriate Registry key, it retrieves the names of its subkeys (which represent different web browsers) using the **GetSubKeyNames()** method. Within the loop of iterating through the list of browsers, it creates an instance of an object named **MSObject4**, which is used to store information about each web browser. The stealer  opens a subkey under the current browser's key path, which corresponds to the "shell\\open\\command" key, to retrieve the command line associated with launching the browser. This command line is stored in **msobject.MSValue3**. It then checks if **msobject.MSValue3** is not null and then retrieves the file version of the browser executable using **FileVersionInfo.GetVersionInfo(msobject.MSValue3).FileVersion**.
 
-![getbrowsers.jpg](/images/MetaStealer/getbrowsers.jpg)
+![getbrowsers.jpg](/images/MetaStealer/getbrowsers.JPG)
 
 The processor information is retrieved via the query **SELECT * FROM Win32_Processor"* within *GetProcessors** method. 
 
@@ -310,16 +310,16 @@ As for the binary, we can also look for Id*, MSValue*, Entity*, MSObject* patter
 ![comparison.png](/images/MetaStealer/comparison.png)
 
 View of the Settings panel:
- ![panel_settings.jpg](/images/MetaStealer/panel_settings.jpg)
+ ![panel_settings.jpg](/images/MetaStealer/panel_settings.JPG)
 
 The Domain Detector settings are used to sort the logs out based on specific domains, the captured logs configured will be displayed as PDD (if the domain is found in credentials), CDD (if the domain is found in cookies) in the Logs panel as well as generated in the Logs file as DomainsDetected.txt.
 The Misc section allows the user to clone the certificate of the binary and file information and apply it to the stealer build as well as to increase the file size and apply VirusTotal leak monitoring (to monitor if the file is submitted to VT).
 
-![misc_panel.jpg](/images/MetaStealer/misc_panel.jpg)
+![misc_panel.jpg](/images/MetaStealer/misc_panel.JPG)
 
 Black Lists section allows the user to blacklist countries (it's worth noting that. compared to Redline, MetaStealer Stealer does not have an anti-CIS (Commonwealth of Independent States) feature) that prevents the stealer from running in CIS countries), IPs, HWIDs and build IDs. 
 
-![panel_binder.jpg](/images/MetaStealer/panel_binder.jpg)
+![panel_binder.jpg](/images/MetaStealer/panel_binder.JPG)
 
 Binder/Crypt section allows the user to bind/merge binaries and obfuscate them with ConfuserEx. The user then can launch the merged binary from the disk or directly in memory with process hollowing using the following APIs:
 
@@ -335,7 +335,7 @@ Binder/Crypt section allows the user to bind/merge binaries and obfuscate them w
 
 We can test run the Yara rule that I provided at the end of this article for MetaStealer relying specifically on strings that are unique to MetaStealer on [unpac.me](https://www.unpac.me/yara/results/da81f160-887e-4284-bc17-b132c121c015). After the successful scan, we see 216 matches and 138 of them are detected as "Redline"
 
-![yara_scan_Results.jpg](/images/MetaStealer/yara_scan_Results.jpg)
+![yara_scan_Results.jpg](/images/MetaStealer/yara_scan_Results.JPG)
 
 ## Configuration Extractor
 
