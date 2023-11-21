@@ -242,7 +242,7 @@ ffnbelfdoeiohenkjibnmadjiehjhajb|YoroiWallet\r\nibnejdfjmmkpcnlpebklmnkoeoihofec
 
 Let's look at the Redline sample where it stores the configuration from the sample I analyzed at the end of 2022 and MetaStealer. We can see that MetaStealer is using MSObject* instead of Entity* objects as well as MSValue* instead of Id*. MetaStealer also uses a different type of collections. Redline Stealer uses *System.Collections.Generic.IEnumerable<Entity16> {Entity16[]}* , which represents a sequence of items of type *Entity16*, and the data shown is an array of *Entity16* objects. Metastealer uses *System.Collections.Generic.List<string>*, which represents a dynamic list of strings. 
 
-!([MetaRedline.drawio.png]/images/MetaStealer/MetaRedline.drawio.png)
+![MetaRedline.drawio.png](/images/MetaStealer/MetaRedline.drawio.png)
 
 Next, MetaStealer proceeds with decrypting the binary ID, which is the same XOR algorithm described earlier for retrieving the IP address.
 Further down, I stumbled across the code that is responsible for extracting the data from the byte array and performing the string replacement. Thanks [@cod3nym](https://twitter.com/cod3nym) for pointing out that it's part of ConfuserEx default constant encryption runtime. 
