@@ -59,7 +59,7 @@ Next, we will look at **method_03**. The code is responsible for setting up netw
 - Next, it adds an "Authorization" message header with a hardcoded value (token/key) that is likely for authentication purposes (for example, **{xmlns="ns1">ead3f92ffddf3eebb6b6d82958e811a0}**)
 - It then returns **true** if the connection setup is successful, **false** if any exception occurs
 
-![method_3_comms.jpg](/images/MetaStealer/method_3_comms.JPG
+![method_3_comms.jpg](/images/MetaStealer/method_3_comms.JPG)
 
 **method_0** contains **MSValue1**, which is a call to a method on a WCF (Windows Communication Foundation) service channel and the **connector** object is a proxy facilitating the remote method invocation.
 
@@ -485,10 +485,16 @@ rule MetaStealer {
 
 ## References
 
-https://malpedia.caad.fkie.fraunhofer.de/details/win.metastealer
-https://tria.ge/231027-nzmhssfg49/behavioral2
-https://www.sentinelone.com/blog/macos-metastealer-new-family-of-obfuscated-go-infostealers-spread-in-targeted-attacks/
-https://www.esentire.com/blog/esentire-threat-intelligence-malware-analysis-redline-stealer
-https://learn.microsoft.com/en-us/dotnet/api/system.servicemodel.channelfactory?view=dotnet-plat-ext-7.0
-https://twitter.com/cod3nym
-https://www.unpac.me/yara/results/da81f160-887e-4284-bc17-b132c121c015
+[https://malpedia.caad.fkie.fraunhofer.de/details/win.metastealer](https://malpedia.caad.fkie.fraunhofer.de/details/win.metastealer)
+
+[https://tria.ge/231027-nzmhssfg49/behavioral2](https://tria.ge/231027-nzmhssfg49/behavioral2)
+
+[https://www.sentinelone.com/blog/macos-metastealer-new-family-of-obfuscated-go-infostealers-spread-in-targeted-attacks/](https://www.sentinelone.com/blog/macos-metastealer-new-family-of-obfuscated-go-infostealers-spread-in-targeted-attacks/)
+
+[https://www.esentire.com/blog/esentire-threat-intelligence-malware-analysis-redline-stealer](https://www.esentire.com/blog/esentire-threat-intelligence-malware-analysis-redline-stealer)
+
+[https://learn.microsoft.com/en-us/dotnet/api/system.servicemodel.channelfactory?view=dotnet-plat-ext-7.0](https://learn.microsoft.com/en-us/dotnet/api/system.servicemodel.channelfactory?view=dotnet-plat-ext-7.0)
+
+[https://twitter.com/cod3nym](https://twitter.com/cod3nym)
+
+[https://www.unpac.me/yara/results/da81f160-887e-4284-bc17-b132c121c015](https://www.unpac.me/yara/results/da81f160-887e-4284-bc17-b132c121c015)
