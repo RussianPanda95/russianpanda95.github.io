@@ -53,7 +53,9 @@ In November 2023, I released the [writeup](https://russianpanda.com/2023/11/20/M
 
 MetaStealer new version is approximately 368KB in size with the binary description **Cavils Corp. 2010** (the previous one was **METRO 2022 Dev**). 
 
-![newlogo 2.png]
+The logo change:
+
+![newlogo.png](/images/MetaStealerPart2/newlogo.JPG)
 If previously, MetaStealer used "Entity" for class names; now it's using "Schema" and "TreeObject" to store data and configurations instead of **MSValue**.
 
 ![class_names_comp.jpg](/images/MetaStealerPart2/class_names_comp.JPG)
@@ -80,10 +82,10 @@ Here are the steps to decrypt the strings:
 
 {% highlight python %}
 def load_net_module(file_path):
-    return ModuleDefMD.Load(file_path)
+    return ModuleDefMD.Load(file_path)
 
 def load_net_assembly(file_path):
-    return Assembly.LoadFile(file_path)
+    return Assembly.LoadFile(file_path)
 # Main script
 module = load_net_module(file_path)
 assembly = load_net_assembly(file_path)
@@ -93,7 +95,7 @@ assembly = load_net_assembly(file_path)
 
 {% highlight python %}
 decryption_signature = [
-    {"Parameters": ["System.Int32"], "ReturnType": "System.String"}
+    {"Parameters": ["System.Int32"], "ReturnType": "System.String"}
 ]
 {% endhighlight %}
 
@@ -101,60 +103,52 @@ decryption_signature = [
 
 {% highlight python %}
 def find_decryption_methods(assembly):
-
-    suspected_methods = []
-    flags = BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic
-    for module_type in assembly.GetTypes():
-        for method in module_type.GetMethods(flags):
-            for sig in decryption_signature:
-                if method_matches_signature(method, sig):
-                    suspected_methods.append(method)
-
-    return suspected_methods
+    suspected_methods = []
+    flags = BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic
+    for module_type in assembly.GetTypes():
+        for method in module_type.GetMethods(flags):
+            for sig in decryption_signature:
+                if method_matches_signature(method, sig):
+                    suspected_methods.append(method)
+    return suspected_methods
 {% endhighlight %}
 
 - Finally, we will invoke the suspected decryption methods by scanning the assembly's methods for calls to the suspected decryption methods, extracting the parameters passed to these methods, and invoking the decryption methods with the extracted parameters.
 
 {% highlight python %}
 def invoke_methods(module, suspected_methods):
-
-    results = {}
-
-    for method in suspected_methods:
-        for module_type in module.Types:
-            if not module_type.HasMethods:
-                continue
-
-            for m in module_type.Methods:
-                if m.HasBody:
-                    for insnIdx, insn in enumerate(m.Body.Instructions):
-                        if insn.OpCode == OpCodes.Call:
-                            called_method_name = str(insn.Operand)
-                            if method.Name in called_method_name:
-                                params = extract_parameters(m.Body.Instructions, insnIdx, method)
-                                if len(params) == len(method.GetParameters()):
-                                    try:
-                                        result = invoke_method_safely(method, params)
-                                        if result is not None:
-                                            location = f"{module_type.FullName}.{m.Name}"
-                                            results[location] = result
-                                    except Exception as e:
-                                        None
-
-    return results
+    results = {}
+    for method in suspected_methods:
+        for module_type in module.Types:
+            if not module_type.HasMethods:
+                continue
+            for m in module_type.Methods:
+                if m.HasBody:
+                    for insnIdx, insn in enumerate(m.Body.Instructions):
+                        if insn.OpCode == OpCodes.Call:
+                            called_method_name = str(insn.Operand)
+                            if method.Name in called_method_name:
+                                params = extract_parameters(m.Body.Instructions, insnIdx, method)
+                                if len(params) == len(method.GetParameters()):
+                                    try:
+                                        result = invoke_method_safely(method, params)
+                                        if result is not None:
+                                            location = f"{module_type.FullName}.{m.Name}"
+                                            results[location] = result
+                                    except Exception as e:
+                                        None
+    return results
 {% endhighlight %}
 
 - We will also include the logic to handle different types of parameters, such as integers and strings. It uses **get_operand_value** to extract values from method instructions based on their type.
 
 {% highlight python %}
 def get_operand_value(insn, param_type):
-    if "Int32" in param_type and insn.IsLdcI4():
-        return Int32(insn.GetLdcI4Value())
-
-    elif "String" in param_type and insn.OpCode == OpCodes.Ldstr:
-        return insn.Operand
-
-    return None
+    if "Int32" in param_type and insn.IsLdcI4():
+        return Int32(insn.GetLdcI4Value())
+    elif "String" in param_type and insn.OpCode == OpCodes.Ldstr:
+        return insn.Operand
+    return None
 {% endhighlight %}
 
 You can access the full script here. 
