@@ -152,7 +152,7 @@ def get_operand_value(insn, param_type):
     return None
 {% endhighlight %}
 
-You can access the full script here. 
+You can access the full script [here](https://github.com/RussianPanda95/Configuration_extractors/blob/main/metastealer_string_decryptor.py). 
 
 **Note:** Please run the script strictly in a sandbox environment.
 
@@ -223,3 +223,8 @@ For more samples, please refer to the result of my Yara scan on [UnpacMe](https:
 
 [https://www.unpac.me/yara/results/f87b8452-ba6d-4c8b-8adb-1ba3986eb4d9#](https://www.unpac.me/yara/results/f87b8452-ba6d-4c8b-8adb-1ba3986eb4d9#/)
 
+[https://github.com/RussianPanda95/Configuration_extractors/blob/main/metastealer_string_decryptor.py](https://github.com/RussianPanda95/Configuration_extractors/blob/main/metastealer_string_decryptor.py)
+
+[https://github.com/RussianPanda95/Yara-Rules/tree/main/MetaStealer](https://github.com/RussianPanda95/Yara-Rules/tree/main/MetaStealer)
+
+[https://github.com/RussianPanda95/Sigma-Rules/blob/main/MetaStealer/suspicious_qemu_file_creation.yaml](https://github.com/RussianPanda95/Sigma-Rules/blob/main/MetaStealer/suspicious_qemu_file_creation.yaml)
