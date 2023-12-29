@@ -13,19 +13,19 @@ Previously, I wrote a blog going through some of MetaStealer's functionalities a
 Every stealer tries to be better than the other one despite having similar code and functionality. What is considered a good stealer? The stealer has a low detection rate and a high rate of successful infection, or what we call "отстук" in Russian. Stealers such as Redline, Metastealer, Raccoon Stealer, Lumma, RisePro, and Vidar have earned their names in the stealer market. Below is the list of top stealers' whose logs are being sold on RussianMarket. 
 
 
-![russianmarket.jpg](/images/MetaStealerPart2/russianmarket.jpg)
+![russianmarket.jpg](/images/MetaStealerPart2/russianmarket.JPG)
 
 The popularity of mentioned stealers among users, mainly those developed by native Russian speakers, could be attributed to the ease of communication and support in their native language. As you might have noticed, stealers are notably prevalent among Russian-speaking communities. The ability to interact in one’s native language - whether it is to request new features, report issues, or inquire about the functionality of the stealer - significantly simplifies the process compared to the effort required for translation into English. This linguistic accessibility potentially broadens the client base, offering the stealer more opportunities to attract additional users.
 
 The world of stealers is rife with drama, much like any other corner of the cybercriminal ecosystem. I was recently informed about an incident related to the Santa Barbara topic on XSS forums. This topic was created by one of Lumma's former coders, coinciding with Lumma's one-year anniversary. To put it briefly, Lumma's founder did not adequately recognize or compensate the coder's contributions, leading to dissatisfaction and underpayment.
 
-![xss_post.jpg](/images/MetaStealerPart2/xss_post.jpg)
+![xss_post.jpg](/images/MetaStealerPart2/xss_post.JPG)
 
 Another drama story: some of you might know how Aurora Stealer left the market before their infamous botnet release; some users deposited money for the botnet and never got it back, of course. Now, Aurora has become a meme within the stealer's community. 
 
 In July 2023, an advertisement was posted on XSS forums for a new stealer written in Golang, known as "EasyStealer", then the rumors started spreading among the stealer's community that this was the work of an Aurora developer, now the stealer is nowhere to be found.  
 
-![easystealer.jpg](/images/MetaStealerPart2/easystealer.jpg)
+![easystealer.jpg](/images/MetaStealerPart2/easystealer.JPG)
 
 Does all of this impact the sales of stealers? Not at all. People continue to purchase stealers as long as their functionality meets their requirements.
 
@@ -56,11 +56,11 @@ MetaStealer new version is approximately 368KB in size with the binary descripti
 ![newlogo 2.png]
 If previously, MetaStealer used "Entity" for class names; now it's using "Schema" and "TreeObject" to store data and configurations instead of **MSValue**.
 
-![class_names_comp.jpg](/images/MetaStealerPart2/class_names_comp.jpg)
+![class_names_comp.jpg](/images/MetaStealerPart2/class_names_comp.JPG)
 
 Instead of string replacement operations, it now accesses a decrypted string from an array based on the given index. For example, below, where it uses **ManagementObjectSearcher** class to query system management information. The constructor of **ManagementObjectSearcher** takes two parameters: a WMI query path and a query string, for example **"ROOT\SecurityCenter: SELECT * FROM AntivirusProduct"**.
 
-![wmi_query.jpg](/images/MetaStealerPart2/wmi_query.jpg)
+![wmi_query.jpg](/images/MetaStealerPart2/wmi_query.JPG)
 
 The new string decryption algorithm works the following way:
 - First, the base64-encoded string gets base64-decoded and XOR'ed with the hardcoded key (in our example, it is **Crayfish**); the XOR'ed string then gets base64-decoded again. 
@@ -163,7 +163,7 @@ You can access the full script here.
 
 The output of the script (tested on the deobfuscated sample *MD5: e6db93b513085fe253753cff76054a2a*):
 
-![decrypted_strings.jpg](/images/MetaStealerPart2/decrypted_strings.jpg)
+![decrypted_strings.jpg](/images/MetaStealerPart2/decrypted_strings.JPG)
 
 You might have noticed an interesting base64-encoded string in the output above. 
 
@@ -171,7 +171,7 @@ Upon decoding, we receive a .NET executable **qemu-ga.exe** (MD5: e6db93b513085f
 
 Now, an interesting moment: MetaStealer writes that executable to the Startup after successfully receiving the configuration from the C2 server and collecting user information. The executable does not do anything but enters the indefinite loop that alternates between sleeping for 100 seconds and waiting for user input without doing anything with that input. 
 
-![qemu-ga.jpg](/images/MetaStealerPart2/qemu-ga.jpg)
+![qemu-ga.jpg](/images/MetaStealerPart2/qemu-ga.JPG)
 
 Another addition to the new version of MetaStealer is the username and computer name check to avoid sandbox environments; if any of the usernames/computer names are found in the list, the stealer process will exit. 
 
@@ -213,7 +213,7 @@ You can access Sigma rules [here](https://github.com/RussianPanda95/Sigma-Rules/
 
 For more samples, please refer to the result of my Yara scan on [UnpacMe](https://www.unpac.me/yara/results/f87b8452-ba6d-4c8b-8adb-1ba3986eb4d9#/).
 
-![unpacme_results.jpg](/images/MetaStealerPart2/unpacme_results.jpg)
+![unpacme_results.jpg](/images/MetaStealerPart2/unpacme_results.JPG)
 
 
 # Reference
