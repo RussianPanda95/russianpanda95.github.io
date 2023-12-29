@@ -47,7 +47,7 @@ The reason why I brought this up is how easily it can be exploited with just a f
   </iframe>
 </div>
 
-# MetaStealer Part 2 Technical Analysis
+# MetaStealer Part 2: Technical Analysis
 
 In November 2023, I released the [writeup](https://russianpanda.com/2023/11/20/MetaStealer-Redline's-Doppelganger/) on MetaStealer. However, soon after its release, the malware developer made another update that changed the class names, string encryption algorithm, binary description, and file icon. 
 
@@ -55,7 +55,8 @@ MetaStealer new version is approximately 368KB in size with the binary descripti
 
 The logo change:
 
-![newlogo.png](/images/MetaStealerPart2/newlogo.JPG)
+![newlogo.png](/images/MetaStealerPart2/newlogo.png)
+
 If previously, MetaStealer used "Entity" for class names; now it's using "Schema" and "TreeObject" to store data and configurations instead of **MSValue**.
 
 ![class_names_comp.jpg](/images/MetaStealerPart2/class_names_comp.JPG)
