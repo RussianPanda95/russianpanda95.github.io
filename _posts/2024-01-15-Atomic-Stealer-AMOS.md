@@ -89,11 +89,11 @@ The **pass** function is responsible for prompting user to enter the password fo
 
 ![invalid_password.JPG](/images/AtomicStealer/invalid_password.JPG)
 
-Once a valid password is entered, the function proceeds with writing the password to **/Users/run/<generated_numeric_value>/password-entered** , based on my understanding. The path with the numeric value is generated using the function below where the stealer gets the current time of the device and then seeds the current time with the random number generator.  
+Once a valid password is entered, the function proceeds with writing the password to **/Users/run/{generated_numeric_value}/password-entered** , based on my understanding. The path with the numeric value is generated using the function below where the stealer gets the current time of the device and then seeds the current time with the random number generator.  
 
 ![randgen.JPG](/images/AtomicStealer/randgen.JPG)
 
-The function then checks if the user's keychain file (**login.keychain-db**) exists. If it does, it copies this keychain file to a new location specified by **/Users/run/<generated_numeric_value>/login-keychain**. The Login Keychain acts as the primary storage file in macOS, where it keeps a majority of the passwords, along with secure notes and various other sensitive pieces of information."
+The function then checks if the user's keychain file (**login.keychain-db**) exists. If it does, it copies this keychain file to a new location specified by **/Users/run/{generated_numeric_value}/login-keychain**. The Login Keychain acts as the primary storage file in macOS, where it keeps a majority of the passwords, along with secure notes and various other sensitive pieces of information."
 
 
 Let's come back to **pbkdf2** key: in order to grab the key, the stealer executes the command "**security 2>&1 > /dev/null find-generic-password -ga 'Chrome' | awk '{print $2}'**". The output is compared against the string **SecKeychainSearchCopyNext**. [SecKeychainSearchCopyNext](https://developer.apple.com/documentation/security/1515362-seckeychainsearchcopynext) is a macOS API function used to find the next keychain item that matches given search criteria. If the output is not SecKeychainSearchCopyNext, the code constructs a file path under **/Chromium/Chrome** and then writes the extracted key into a file named **Local State**. The **pbkdf2** key serves as an essential component for [password decryption](https://github.com/thanatoskira/OSXChromeDecrypt/blob/master/ChromePasswords.py) in Chrome. 
@@ -132,6 +132,7 @@ Let's briefly go through it:
 	- If the current byte is five less than the next, XOR it with the next byte plus 4.
     - After applying the XOR operation, the current byte is incremented by 1, and the algorithm moves to the next byte.
     
+
 - This whole process continues until a certain condition is met (like reaching a specific array index), signifying the end of the encrypted data.
 
 ![decryption_algo.JPG](/images/AtomicStealer/decryption_algo.JPG)
@@ -144,7 +145,7 @@ AMOS uses **mz_zip_writer_add_mem**, [Miniz compression](https://mongoose-os.com
 
 **send_me** function is responsible for sending the logs in a ZIP archive over to C2 to port 80 using the hardcoded UUID **7bc8f87e-c842-47c7-8f05-10e2be357888**.  Instead of using **/sendlog** as an endpoint, the new version uses **/p2p** to send POST requests. 
 
-**passnet**function is responsible for retrieving the **pbkdf2** from Chrome, the stealer calls it **masterpass-chrome**. 
+**passnet** function is responsible for retrieving the **pbkdf2** from Chrome, the stealer calls it **masterpass-chrome**. 
 
 **pwdget** function is responsible for retrieving the password of the MacOS device via the dialog "**Required Application Helper. Please enter passphrase for {username}**" as shown below.
 
@@ -162,8 +163,8 @@ The FileGrabber functionality is shown in the image below.
 
 ![FileGrabber2.JPG](/images/AtomicStealer/FileGrabber2.JPG)
 
-FileGrabber has several functionalities: 
-- It sets a destination folder path named **fg** in the home folder of the current user (**/Users/<username>**). If this folder doesn't exist, it creates it. It then defines a list of file extensions (**"txt", "png", "jpg", "jpeg", "wallet", "keys", "key"**) to filter files for later operations. It initializes a variable **bankSize** to 0, possibly intended to keep track of the total size of files processed. 
+**FileGrabber has several functionalities:**
+- It sets a destination folder path named **fg** in the home folder of the current user (**/Users/<username>**). If this folder doesn't exist, it creates it. It then defines a list of file extensions ("txt", "png", "jpg", "jpeg", "wallet", "keys", "key") to filter files for later operations. It initializes a variable **bankSize** to 0, possibly intended to keep track of the total size of files processed. 
 - Next, it proceeds with retrieving the path to Safari's cookies folder and tries to duplicate the **Cookies.binarycookies** file from Safari's folder to the destination folder. This file contains Safari browser cookies.
 - For processing notes data it attempts to duplicate specific Notes database files (**"NoteStore.sqlite", "NoteStore.sqlite-shm", "NoteStore.sqlite-wal"**) to the destination folder. These files contain user's notes.
 - For processing files on Desktop and Documents folders it retrieves all files from the Desktop and the Documents folder. For each file, it checks if the file's extension is in the predefined list mentioned above. If the file matches the criteria and the total size (**bankSize**) of processed files does not exceed 10 MB, it duplicates the file to the destination folder and updates **bankSize**.
