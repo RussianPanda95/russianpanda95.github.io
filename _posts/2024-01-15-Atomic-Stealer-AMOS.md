@@ -179,7 +179,7 @@ You can access the list of decrypted strings [here](https://gist.github.com/Russ
 
 ## Conclusion 
 
-Besides encrypted strings, the new version appears to avoid writing the ZIP archive of collected data to the disk, and it no longer contains hardcoded VM strings. The latest version of AMOS is designed to leave as few traces as possible on the infected machines. There is also a typo in one of the wallet addresses in the new version for some reason **acmacodkjbdgmoleeebolmdjonilkdbch** , which is supposed to be **acmacodkjbdgmoleebolmdjonilkdbch**. 
+Besides encrypted strings, the new version appears to perform additional enumeration on the infected machine and, from what I could tell, the ZIP archive is not written to the disk anymore. The latest version of AMOS is definitely designed to leave as few traces as possible on the infected machines. There is also a typo in one of the wallet addresses in the new version for some reason **acmacodkjbdgmoleeebolmdjonilkdbch** , which is supposed to be **acmacodkjbdgmoleebolmdjonilkdbch**. 
 
 I would like to extend my thanks to [Edward Crowder](https://www.linkedin.com/in/edward-c-61765a11b/) for his assistance with MacOS questions and to [@cod3nym](https://twitter.com/cod3nym) for the help in implementing the Python decryption function.
 
