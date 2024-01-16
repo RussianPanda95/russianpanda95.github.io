@@ -143,7 +143,7 @@ Let's briefly go through it:
 
 ![decryption_algo.JPG](/images/AtomicStealer/decryption_algo.JPG)
 
-After struggling to understand why I was failing to reproduce the decryption algorithm from C to Python, @cod3nym helped me to figure out that the solution involved using [ctypes](https://docs.python.org/3/library/ctypes.html).
+After struggling to understand why I was failing to reproduce the decryption algorithm from C to Python, [@cod3nym](https://twitter.com/cod3nym) helped me to figure out that the solution involved using [ctypes](https://docs.python.org/3/library/ctypes.html).
 
 So, using that information, I wrote the IDAPython script to decrypt the strings, so I don't have to manually enter each of them in :D The script is pretty wonky, but it does the job. You can access the script [here](https://github.com/RussianPanda95/IDAPython/blob/main/Atomic%20Stealer/idapython_amos_stealer_string_decrypt.py).
 
