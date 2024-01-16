@@ -172,7 +172,7 @@ The FileGrabber functionality is shown in the image below.
 **FileGrabber has several functionalities:**
 - It sets a destination folder path named **fg** in the home folder of the current user (**/Users/{username}**). If this folder doesn't exist, it creates it. It then defines a list of file extensions ("txt", "png", "jpg", "jpeg", "wallet", "keys", "key") to filter files for later operations. It initializes a variable "bankSize" to 0, possibly intended to keep track of the total size of files processed. 
 - Next, it proceeds with retrieving the path to Safari's cookies folder and tries to duplicate the **Cookies.binarycookies** file from Safari's folder to the destination folder. This file contains Safari browser cookies.
-- For processing notes data it attempts to duplicate specific Notes database files (**"NoteStore.sqlite", "NoteStore.sqlite-shm", "NoteStore.sqlite-wal"**) to the destination folder. These files contain user's notes.
+- For processing notes data it attempts to duplicate specific Notes database files ("NoteStore.sqlite", "NoteStore.sqlite-shm", "NoteStore.sqlite-wal") to the destination folder. These files contain user's notes.
 - For processing files on Desktop and Documents folders it retrieves all files from the Desktop and the Documents folder. For each file, it checks if the file's extension is in the predefined list mentioned above. If the file matches the criteria and the total size (bankSize) of processed files does not exceed 10 MB, it duplicates the file to the destination folder and updates "bankSize".
 
 **List of decrypted strings:**
