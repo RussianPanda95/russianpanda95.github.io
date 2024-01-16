@@ -177,7 +177,7 @@ The FileGrabber functionality is shown in the image below.
 
 **List of decrypted strings:**
 
-{% highlight bash %}
+{% highlight xml %}
 Decrypted string at address 0x1000224f2: osascript -e 'display dialog "Required Application Helper. Please enter passphrase for 
 Decrypted string at LEA: ." default answer "" with icon caution buttons {"Continue"} default button "Continue" giving up after 150 with title "Application wants to install helper" with hidden answer' at 0x100022629
 Error occurred during decryption: bytearray index out of range
