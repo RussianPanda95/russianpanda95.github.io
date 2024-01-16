@@ -104,7 +104,7 @@ security 2>&1 > /dev/null find-generic-password -ga 'Chrome' | awk '{print $2}'
 
 The output is compared against the string **SecKeychainSearchCopyNext**. [SecKeychainSearchCopyNext](https://developer.apple.com/documentation/security/1515362-seckeychainsearchcopynext) is a macOS API function used to find the next keychain item that matches given search criteria. If the output is not SecKeychainSearchCopyNext, the code constructs a file path under **/Chromium/Chrome** and then writes the extracted key into a file named **Local State**. The **pbkdf2** key serves as an essential component for [password decryption](https://github.com/thanatoskira/OSXChromeDecrypt/blob/master/ChromePasswords.py) in Chrome. 
 
-Within function **dotask()**, after collecting data from functions (it's worth mentioning that the data collected are appeared to be stored at **/Users/run/<generated_numeric_value>**):
+Within function **dotask()**, after collecting data from functions (it's worth mentioning that the data collected are appeared to be stored at **/Users/run/{generated_numeric_value}**):
 
 - GrabChromium()
 - keychain()
@@ -170,10 +170,10 @@ The FileGrabber functionality is shown in the image below.
 ![FileGrabber2.JPG](/images/AtomicStealer/FileGrabber2.JPG)
 
 **FileGrabber has several functionalities:**
-- It sets a destination folder path named **fg** in the home folder of the current user (**/Users/<username>**). If this folder doesn't exist, it creates it. It then defines a list of file extensions ("txt", "png", "jpg", "jpeg", "wallet", "keys", "key") to filter files for later operations. It initializes a variable **bankSize** to 0, possibly intended to keep track of the total size of files processed. 
+- It sets a destination folder path named **fg** in the home folder of the current user (**/Users/{username}**). If this folder doesn't exist, it creates it. It then defines a list of file extensions ("txt", "png", "jpg", "jpeg", "wallet", "keys", "key") to filter files for later operations. It initializes a variable "bankSize" to 0, possibly intended to keep track of the total size of files processed. 
 - Next, it proceeds with retrieving the path to Safari's cookies folder and tries to duplicate the **Cookies.binarycookies** file from Safari's folder to the destination folder. This file contains Safari browser cookies.
 - For processing notes data it attempts to duplicate specific Notes database files (**"NoteStore.sqlite", "NoteStore.sqlite-shm", "NoteStore.sqlite-wal"**) to the destination folder. These files contain user's notes.
-- For processing files on Desktop and Documents folders it retrieves all files from the Desktop and the Documents folder. For each file, it checks if the file's extension is in the predefined list mentioned above. If the file matches the criteria and the total size (**bankSize**) of processed files does not exceed 10 MB, it duplicates the file to the destination folder and updates **bankSize**.
+- For processing files on Desktop and Documents folders it retrieves all files from the Desktop and the Documents folder. For each file, it checks if the file's extension is in the predefined list mentioned above. If the file matches the criteria and the total size (bankSize) of processed files does not exceed 10 MB, it duplicates the file to the destination folder and updates "bankSize".
 
 **List of decrypted strings:**
 
