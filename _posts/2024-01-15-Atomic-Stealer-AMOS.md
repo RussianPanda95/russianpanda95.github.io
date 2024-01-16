@@ -3,7 +3,7 @@ layout: post
 title: "From Russia With Code: Disarming Atomic Stealer"
 description: Atomic Stealer
 date: 2024-01-16 00:02:35 +0300
-image: /images/AtomicStealer/atomic-stealer-badass.png
+image: /images/AtomicStealer/atomic-stealer-badass1.png
 ---
 
 # Case Study
