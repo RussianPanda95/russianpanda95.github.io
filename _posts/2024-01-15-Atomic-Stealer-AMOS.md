@@ -52,7 +52,7 @@ In December 2023, Jérôme Segura [published an article](https://www.malwarebyte
 
 To cheat a little bit, we can look at the functionality of the previous Atomic Stealer to be able to recognize and interpret the actions for some of the decrypted strings in the newer versions. 
 
-In the previous version (MD5: ), AMOS implements anti-VM checks, the stealer executes the command **system_profiler SPHardwareDataType**. 
+In the previous version (MD5: bf7512021dbdce0bd111f7ef1aa615d5), AMOS implements anti-VM checks, the stealer executes the command **system_profiler SPHardwareDataType**. 
 **system_profiler** is a command-line utility in macOS that provides detailed information about the hardware and software configuration of the Mac device. It's the command-line equivalent of the "System Information" on Windows and MacOS machines that users can access through the GUI. **SPHardwareDataType** is a specific data type specifier for the **system_profiler** command, it instructs the utility to display information related only to the hardware of the system, such as processor name, number of processors, model name, hardware UUID, serial number, etc. If it detects **VMware** or **Apple Virtual Machine** - the program exits. If not, the collected information is passed to **/Sysinfo.txt**. 
 
 ![vm_check.JPG](/images/AtomicStealer/vm_check.JPG)
