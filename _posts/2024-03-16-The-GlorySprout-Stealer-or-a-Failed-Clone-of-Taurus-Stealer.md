@@ -67,7 +67,7 @@ The stealer accesses the hashed API values via specific offsets.
 
 ![accessing_api.png](/images/GlorySprout/accessing_api.png)
 
-![[api_hashing2 1.png]]
+![api_hashing2.png](/images/GlorySprout/api_hashing2.png)
 
 The Anti-CIS function is shown below:
 
