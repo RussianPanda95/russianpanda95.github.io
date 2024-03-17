@@ -17,7 +17,7 @@ What particularly captured my attention regarding this stealer was that an indiv
 
 # Taurus Stealer Backstory
 
-Let's a little about Taurus Stealer Project. It first appeared for sale on XSS in April 2020.  
+Let's talk a little about Taurus Stealer Project. It first appeared for sale on XSS in April 2020.  
 
 ![taurusads.jpg](/images/GlorySprout/taurusads.JPG)
 
