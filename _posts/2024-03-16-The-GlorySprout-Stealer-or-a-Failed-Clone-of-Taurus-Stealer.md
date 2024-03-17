@@ -95,7 +95,7 @@ The C2 address of the stealer is retrieved from the resource section of the decr
 
 ![get_c2.png](/images/GlorySprout/get_c2.png)
 
-# C2 Communications
+# C2 Communication
 
 Communication with the C2 server is performed via port 80. Upon checking in with the C2 server, the infected machine sends out the POST request **/cfg/data=<BotID>**using the user-agent **Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit / 537.36 (KHTML, like Gecko) Chrome / 83.0.5906.121 Safari/537.36**. The BotID value is encrypted with the RC4 key generated via random key generation function that was previously mentioned and base64-encoded. The RC4 key is the first 10 bytes of the encrypted string. 
 
@@ -143,7 +143,7 @@ After the check-in, the server responds with an encrypted configuration, where t
 
 The decrypted conguration looks like this:
 
-{% highlight xml %}
+{% highlight bash %}
 [1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;0;0;1;1]#[]#[<infected_machine_IP;<infected_machine_GEO]#[[<loader_URL;;;1;1;1]]
 {% endhighlight %}
 
