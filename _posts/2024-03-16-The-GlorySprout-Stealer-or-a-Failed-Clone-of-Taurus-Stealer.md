@@ -166,7 +166,7 @@ Here is an example breakdown of the configuration (0: stands for disabled, 1: st
 - **0**: Grab NordVPN
 - **0**: Unknown placeholder
 - **1**: Anti-VM
-- **1**: Self-deletion (self-delete after sending the logs to C2): self-deletion performs with the command "**C:\Windows\system32\cmd.exe" /c ping google.com && erase C:\Users\<username>\Desktop\<stealer>.exe**" . Pinging introduces the delay, likely to guarantee the successful full execution of the payload.
+- **1**: Self-deletion (self-delete after sending the logs to C2): self-deletion performs with the command "**C:\Windows\system32\cmd.exe" /c ping google.com && erase C:\Users\\<username>\\Desktop\\<stealer>.exe**" . Pinging introduces the delay, likely to guarantee the successful full execution of the payload.
 - loader_URL - contains the link to the secondary payload
 - **1**: Only with crypto - the loader payload only runs if cryptowallets are present on the machine
 - **1**: Autorun - creates the persistence for a secondary payload
