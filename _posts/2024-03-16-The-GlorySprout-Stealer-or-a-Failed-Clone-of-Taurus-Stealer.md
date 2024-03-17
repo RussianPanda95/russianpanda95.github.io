@@ -143,8 +143,11 @@ After the check-in, the server responds with an encrypted configuration, where t
 
 The decrypted conguration looks like this:
 
-**[1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;0;0;1;1]#[]#[<infected_machine_IP;<infected_machine_GEO]#[[<loader_URL;;;1;1;1]]**
+{% highlight jaavscript %}
 
+[1;1;1;1;1;1;1;1;1;1;1;1;1;1;1;0;0;1;1]#[]#[<infected_machine_IP;<infected_machine_GEO]#[[<loader_URL;;;1;1;1]]
+
+{% endhighlight %}
 
 Here is an example breakdown of the configuration:
 - 1: Grab browser history 
