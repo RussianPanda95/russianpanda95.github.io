@@ -97,7 +97,7 @@ The C2 address of the stealer is retrieved from the resource section of the decr
 
 # C2 Communication
 
-Communication with the C2 server is performed via port 80. Upon checking in with the C2 server, the infected machine sends out the POST request "**/cfg/data=<BotID>**" using the user-agent "**Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit / 537.36 (KHTML, like Gecko) Chrome / 83.0.5906.121 Safari/537.36**". The BotID value is encrypted with the RC4 key generated via random key generation function that was previously mentioned and base64-encoded. The RC4 key is the first 10 bytes of the encrypted string. 
+Communication with the C2 server is performed via port 80. Upon checking in with the C2 server, the infected machine sends out the POST request "/cfg/data=<BotID>" using the user-agent "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit / 537.36 (KHTML, like Gecko) Chrome / 83.0.5906.121 Safari/537.36". The BotID value is encrypted with the RC4 key generated via random key generation function that was previously mentioned and base64-encoded. The RC4 key is the first 10 bytes of the encrypted string. 
 
 ![c2_post_check_in.jpg](/images/GlorySprout/c2_post_check_in.JPG)
 
@@ -147,30 +147,30 @@ The decrypted conguration looks like this:
 
 {% endhighlight %}
 
-Here is an example breakdown of the configuration:
-- 1: Grab browser history 
-- 1: Grab screenshot
-- 1: Grab cryptowallets recursively from %AppData% folder (Cryptowallets supported based on the analysis: Electrum, MultiBit, Armory, Ethereum, Bytecoin, Jaxx, Atomic, Exodus, DashCore, Bitcoin, WalletWasabi, Daedalus Mainnet, Monerom )
-- 1: Grab Steam sessions
-- 1: Grab BattleNet account information
-- 1: Grab Telegram session
-- 1: Grab Discord session
-- 1: Grab Skype messages
-- 1: Grab Jabber accounts from %AppData% folder
-- 1: Grab Foxmail accounts
-- 1: Grab Outlook accounts
-- 1: Grab FileZilla data
-- 1: Grab WinFTP accounts
-- 1: Grab WinSCP accounts
-- 1: Grab Authy
-- 0: Grab NordVPN
-- 0: Unknown placeholder
-- 1: Anti-VM
-- 1: Self-deletion (self-delete after sending the logs to C2): self-deletion performs with the command "**C:\Windows\system32\cmd.exe" /c ping google.com && erase C:\Users\<username>\Desktop\<stealer>.exe**" . Pinging introduces the delay, likely to guarantee the successful full execution of the payload.
+Here is an example breakdown of the configuration (0: stands for disabled, 1: stands for enabled):
+- **1**: Grab browser history 
+- **1**: Grab screenshot
+- **1**: Grab cryptowallets recursively from %AppData% folder (Cryptowallets supported based on the analysis: Electrum, MultiBit, Armory, Ethereum, Bytecoin, Jaxx, Atomic, Exodus, DashCore, Bitcoin, WalletWasabi, Daedalus Mainnet, Monerom )
+- **1**: Grab Steam sessions
+- **1**: Grab BattleNet account information
+- **1**: Grab Telegram session
+- **1**: Grab Discord session
+- **1**: Grab Skype messages
+- **1**: Grab Jabber accounts from %AppData% folder
+- **1**: Grab Foxmail accounts
+- **1**: Grab Outlook accounts
+- **1**: Grab FileZilla data
+- **1**: Grab WinFTP accounts
+- **1**: Grab WinSCP accounts
+- **1**: Grab Authy
+- **0**: Grab NordVPN
+- **0**: Unknown placeholder
+- **1**: Anti-VM
+- **1**: Self-deletion (self-delete after sending the logs to C2): self-deletion performs with the command "**C:\Windows\system32\cmd.exe" /c ping google.com && erase C:\Users\<username>\Desktop\<stealer>.exe**" . Pinging introduces the delay, likely to guarantee the successful full execution of the payload.
 - loader_URL - contains the link to the secondary payload
-- 1: Only with crypto - the loader payload only runs if cryptowallets are present on the machine
-- 1: Autorun - creates the persistence for a secondary payload
-- 1: Start after creating - runs the secondary payload after dropping it in %TEMP% folder
+- **1**: Only with crypto - the loader payload only runs if cryptowallets are present on the machine
+- **1**: Autorun - creates the persistence for a secondary payload
+- **1**: Start after creating - runs the secondary payload after dropping it in %TEMP% folder
 
 After receiving the configuration, the infected machine sends out the POST request with **/log/** parameter containing the ZIP archive with collected data to C2 server as shown below:
 
@@ -186,7 +186,7 @@ As mentioned before, the panel of the stealer is written in Golang. The panel al
 
 ![golang_p.jpg](/images/GlorySprout/golang_p.JPG)
 
-The usernames found in mysql database:
+Interesting usernames found in mysql database:
 
 ![sql_db.png](/images/GlorySprout/sql_db.png)
 
