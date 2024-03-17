@@ -97,7 +97,7 @@ The C2 address of the stealer is retrieved from the resource section of the decr
 
 # C2 Communication
 
-Communication with the C2 server is performed via port 80. Upon checking in with the C2 server, the infected machine sends out the POST request **/cfg/data=<BotID>**using the user-agent **Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit / 537.36 (KHTML, like Gecko) Chrome / 83.0.5906.121 Safari/537.36**. The BotID value is encrypted with the RC4 key generated via random key generation function that was previously mentioned and base64-encoded. The RC4 key is the first 10 bytes of the encrypted string. 
+Communication with the C2 server is performed via port 80. Upon checking in with the C2 server, the infected machine sends out the POST request **/cfg/data=<BotID>** using the user-agent **Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit / 537.36 (KHTML, like Gecko) Chrome / 83.0.5906.121 Safari/537.36**. The BotID value is encrypted with the RC4 key generated via random key generation function that was previously mentioned and base64-encoded. The RC4 key is the first 10 bytes of the encrypted string. 
 
 ![c2_post_check_in.jpg](/images/GlorySprout/c2_post_check_in.JPG)
 
@@ -111,7 +111,7 @@ The reproduced Python code for randomization function:
 
 {% highlight python %}
 
-initial_seed = 0xC40DF552  # Initial state for the rand() function
+initial_seed = 0xC40DF552  # Initial state
 
 src_data = bytes.fromhex("1B6C4C6D4D6E4E6F4F70507151725273537454755576567757785879597A5A7B5B7C5C7D5D7E5E7F5F80608161826283")
 
@@ -123,7 +123,6 @@ def rand(seed):
     seed = (214013 * seed + 2531011) & 0xFFFFFFFF  
     return ((seed >> 16) & 0x7FFF), seed  
 
-# Generate the key
 def generate_key(a2, seed):
     key = ""
     for _ in range(a2):
@@ -131,7 +130,6 @@ def generate_key(a2, seed):
         key += chr(adjusted_src_data[1 + (rand_val % 23)]) 
     return key, seed
 
-# Generate the RC4 key with a2 = 0x10 and the initial seed
 value, final_seed = generate_key(0x10, initial_seed)
 value, final_seed
 
@@ -168,7 +166,7 @@ Here is an example breakdown of the configuration:
 - 0: Grab NordVPN
 - 0: Unknown placeholder
 - 1: Anti-VM
-- 1: Self-deletion (self-delete after sending the logs to C2): self-deletion performs with the command **C:\Windows\system32\cmd.exe" /c ping google.com && erase C:\Users\<username>\Desktop\<stealer>.exe** . Pinging introduces the delay, likely to guarantee the successful full execution of the payload.
+- 1: Self-deletion (self-delete after sending the logs to C2): self-deletion performs with the command "**C:\Windows\system32\cmd.exe" /c ping google.com && erase C:\Users\<username>\Desktop\<stealer>.exe**" . Pinging introduces the delay, likely to guarantee the successful full execution of the payload.
 - loader_URL - contains the link to the secondary payload
 - 1: Only with crypto - the loader payload only runs if cryptowallets are present on the machine
 - 1: Autorun - creates the persistence for a secondary payload
