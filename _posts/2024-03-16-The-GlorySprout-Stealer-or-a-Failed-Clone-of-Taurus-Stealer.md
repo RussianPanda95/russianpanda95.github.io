@@ -33,7 +33,7 @@ Now, let's confirm the theories...
 
 Below is the screenshot of GlorySprout panel:
 
-![panel.jpg](/images/GlorySprout/panel.JPG)
+![panel.jpg](/images/GlorySprout/panel.jpg)
 
 And this is the Taurus Stealer panel:
 
