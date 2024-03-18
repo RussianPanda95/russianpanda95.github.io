@@ -25,7 +25,7 @@ The stealer is written in C++ with a Golang panel. It was sold for $150 for life
 
 One of the XSS users claims that the panel is very similar to Predator The Thief stealer. You can read a nice writeup on Predator Stealer [here](https://fumik0.com/2019/12/25/lets-play-again-with-predator-the-thief/).
 
-![xsscomment.jpg](/images/GlorySprout/taurusads.JPG)
+![xsscomment.jpg](/images/GlorySprout/xsscomment.JPG)
 
 The Predator stealer shares many similarities with Taurus Stealer, including encryption in C2 communication, Bot ID formatting, the Anti-VM feature, and naming conventions for log files, as well as resemblances in the panel GUI. However, to refocus, Taurus Stealer terminated their project around 2021. The cracked version of Taurus Stealer is being sold on Telegram, and there's information suggesting that Taurus Stealer sold their source code, which could explain these parallels.
 
@@ -33,11 +33,11 @@ Now, let's confirm the theories...
 
 Below is the screenshot of GlorySprout panel:
 
-![panel.jpg](/images/GlorySprout/taurusads.JPG)
+![panel.jpg](/images/GlorySprout/panel.JPG)
 
 And this is the Taurus Stealer panel:
 
-![tauruspanel.jpg](/images/GlorySprout/taurusads.JPG)
+![tauruspanel.jpg](/images/GlorySprout/tauruspanel.JPG)
 
 Can you spot the similarities and differences? :)
 
