@@ -46,8 +46,8 @@ contact:
 #-------------------------------
 # Footer section
 social:
-- {icon: "fa-brands fa-linkedin", link: "https://www.linkedin.com/in/ann-f-868921105/"}
-- {icon: "fa-brands fa-x-twitter", name: "Twitter", link: "https://twitter.com/AnFam17"}
+- {icon: "fa-brands fa-linkedin", link: "https://www.linkedin.com/in/anna-p-868921105/"}
+- {icon: "fa-brands fa-x-twitter", name: "Twitter", link: "https://x.com/RussianPanda9xx"}
 - {icon: "fa-brands fa-instagram", name: "Instagram", link: "https://www.instagram.com/russianpanda95/"}
 - {icon: "fa-brands fa-github", name: "Github", link: "https://github.com/RussianPanda95"}
 # Example of adding a new link to the footer - {icon: "fa-brands fa-mastodon", name: "Mastodon", link: "https://mastodon.social/"}
