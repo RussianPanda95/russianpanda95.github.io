@@ -67,5 +67,5 @@ google-analytics: # Add your identifier. For example UA-99631805-1.
 #-------------------------------
 # Newsletter
 mailchimp: enable # To enable the mailchimp form, use the value 'enable'. To disable the form, leave the field blank.
-mailchimp-identifier: # Add your MailChimp form identifier. For example - gmail.us21.list-manage.com/subscribe/post?u=8aeb9c31a5c97a3a5f9ff2740&amp;id=0e31fd7793&amp
+mailchimp-identifier: https://russianpanda.us22.list-manage.com/subscribe?u=675ada996d5aa879b806c587d&id=b8d185d6e6 # Add your MailChimp form identifier. For example - gmail.us21.list-manage.com/subscribe/post?u=8aeb9c31a5c97a3a5f9ff2740&amp;id=0e31fd7793&amp
 mailchimp-button-text: Join

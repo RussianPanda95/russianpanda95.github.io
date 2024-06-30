@@ -1,8 +1,9 @@
 #-------------------------------
 # General Site Settings
+title: RussianPanda Research Blog 
+#logo: '/images/logo.jpg'
 baseurl: "" # The subpath of your site, e.g. /blog
-url: "" # The base hostname & protocol for your site, e.g. http://example.com
-
+url: "https://russianpanda95.github.io" # The base hostname & protocol for your site, e.g. http://example.com
 
 #-------------------------------
 # Build settings
