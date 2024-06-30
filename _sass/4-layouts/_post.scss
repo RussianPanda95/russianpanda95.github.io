@@ -17,13 +17,13 @@
     margin-left: 32px;
   }
 
-  @media only screen and (max-width: $desktop) {
+  @media (max-width: $desktop) {
     .post-head__box {
       margin-left: 16px;
     }
   }
 
-  @media only screen and (max-width: $tablet) {
+  @media (max-width: $tablet) {
     margin-bottom: 40px;
 
     .post-head__box {
@@ -48,14 +48,14 @@
 
 .image-box {
   position: relative;
-  padding-top: 60%;
+  padding-top: 90%;
   min-height: 280px;
   border-radius: 16px;
   overflow: hidden;
   box-shadow: 0 5px 10px 0px rgba(0,0,0,.15);
   background-color: $dark;
 
-  @media only screen and (max-width: $tablet) {
+  @media (max-width: $tablet) {
     padding-top: 65%;
     margin-bottom: 40px;
   }
@@ -81,11 +81,11 @@
   font-size: 56px;
   line-height: 1;
 
-  @media only screen and (max-width: 1200px) {
+  @media (max-width: 1200px) {
     font-size: 40px;
   }
 
-  @media only screen and (max-width: $mobile) {
+  @media (max-width: $mobile) {
     font-size: 32px;
   }
 }
@@ -186,7 +186,7 @@
       justify-content: center;
       align-items: center;
       padding: 28px 24px;
-      font-size: 20px;
+      font-size: 19px;
       color: $text-color;
       transition: all .2s;
       &:first-child {
@@ -213,9 +213,9 @@
     }
   }
 
-  @media only screen and (max-width: $mobile) {
+  @media (max-width: $mobile) {
     margin: 48px 0;
-    
+
     .share__list {
       .share__link {
         padding: 24px 20px;
@@ -247,7 +247,7 @@
   .next img {
     border-radius: 0 16px 16px 0;
   }
-  
+
 
   .prev, .next {
     position: relative;
@@ -261,6 +261,7 @@
     background-position: center;
     background-repeat: no-repeat;
     background-color: $dark;
+    -webkit-user-select: none;
     user-select: none;
     &::after {
       content: "";
@@ -296,6 +297,7 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
+      pointer-events: none;
     }
 
     .post__nav-box {
@@ -331,7 +333,7 @@
     margin-left: auto;
   }
 
-  @media only screen and (max-width: $tablet) {
+  @media (max-width: $tablet) {
     flex-wrap: wrap;
     box-shadow: none;
 
@@ -350,7 +352,7 @@
     }
   }
 
-  @media only screen and (max-width: $mobile) {
+  @media (max-width: $mobile) {
     margin-bottom: 48px;
   }
 }
@@ -383,7 +385,7 @@
       border-radius: 4px 0px 0px 4px;
       background: linear-gradient(90deg, $brand-color -5.19%, rgba($background-color, 0) 100%);;
     }
-    @media only screen and (max-width: $desktop) {
+    @media (max-width: $desktop) {
       font-size: 24px;
     }
   }
@@ -399,7 +401,7 @@
   max-width: 824px;
   padding: 64px 32px;
   margin: 0 auto;
-  @media only screen and (max-width: $mobile) {
+  @media (max-width: $mobile) {
     padding: 48px 32px;
   }
 }

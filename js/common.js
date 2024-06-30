@@ -1,56 +1,58 @@
-$(document).ready(function() {
+document.addEventListener("DOMContentLoaded", function() {
   'use strict';
 
-  var menuOpenIcon = $(".nav__icon-menu"),
-    menuCloseIcon = $(".nav__icon-close"),
-    menuList = $(".menu-overlay"),
-    searchOpenIcon = $(".search-button"),
-    searchCloseIcon = $(".search__close"),
-    searchInput = $(".search__text"),
-    searchBox = $(".search");
+  const body = document.querySelector("body"),
+  menuOpenIcon = document.querySelector(".nav__icon-menu"),
+  menuCloseIcon = document.querySelector(".nav__icon-close"),
+  menuList = document.querySelector(".menu-overlay"),
+  searchOpenIcon = document.querySelector(".search-button"),
+  searchCloseIcon = document.querySelector(".search__close"),
+  searchInput = document.querySelector(".search__text"),
+  search = document.querySelector(".search"),
+  btnScrollToTop = document.querySelector(".top");
 
 
   /* =======================
   // Menu and Search
   ======================= */
-  menuOpenIcon.click(function () {
+  menuOpenIcon.addEventListener("click", () => {
     menuOpen();
-  })
+  });
 
-  menuCloseIcon.click(function () {
+  menuCloseIcon.addEventListener("click", () => {
     menuClose();
-  })
+  });
 
-  searchOpenIcon.click(function () {
+  searchOpenIcon.addEventListener("click", () => {
     searchOpen();
   });
 
-  searchCloseIcon.click(function () {
+  searchCloseIcon.addEventListener("click", () => {
     searchClose();
   });
 
   function menuOpen() {
-    menuList.addClass("is-open");
+    menuList.classList.add("is-open");
   }
 
   function menuClose() {
-    menuList.removeClass("is-open");
+    menuList.classList.remove("is-open");
   }
 
   function searchOpen() {
-    searchBox.addClass("is-visible");
+    search.classList.add("is-visible");
     setTimeout(function () {
       searchInput.focus();
     }, 300);
   }
 
   function searchClose() {
-    searchBox.removeClass("is-visible");
+    search.classList.remove("is-visible");
   }
 
-  $('.search, .search__box').on('click keyup', function (event) {
-    if (event.target == this || event.keyCode == 27) {
-      $('.search').removeClass('is-visible');
+  document.addEventListener("keydown", function(e){
+    if (e.key == "Escape") {
+      searchClose();
     }
   });
 
@@ -59,20 +61,8 @@ $(document).ready(function() {
   // Animation Load Page
   ======================= */
   setTimeout(function(){
-    $('body').addClass('is-in');
+    body.classList.add("is-in");
   },150)
-
-
-  // =====================
-  // Simple Jekyll Search
-  // =====================
-  SimpleJekyllSearch({
-    searchInput: document.getElementById("js-search-input"),
-    resultsContainer: document.getElementById("js-results-container"),
-    json: "/search.json",
-    searchResultTemplate: '{article}',
-    noResultsText: '<li class="no-results"><h3>No results found</h3></li>'
-  });
 
 
   /* =======================
@@ -83,67 +73,53 @@ $(document).ready(function() {
   })
 
 
-  // =====================
-  // Ajax Load More
-  // =====================
-  var $load_posts_button = $('.load-more-posts');
+  /* =======================
+  // Zoom Image
+  ======================= */
+  const lightense = document.querySelector(".page img, .post img"),
+  imageLink = document.querySelectorAll(".page a img, .post a img");
 
-  $load_posts_button.click(function(e) {
-    e.preventDefault();
-    var loadMore = $('.load-more-section');
-    var request_next_link = pagination_next_url.split('/page')[0] + '/page/' + pagination_next_page_number + '/';
+  if (imageLink) {
+    for (let i = 0; i < imageLink.length; i++) imageLink[i].parentNode.classList.add("image-link");
+    for (let i = 0; i < imageLink.length; i++) imageLink[i].classList.add("no-lightense");
+  };
 
-    $.ajax({
-      url: request_next_link,
-      beforeSend: function() {
-        $load_posts_button.text('Loading...');
-      }
-    }).done(function(data) {
-      var posts = $('.grid__post', data);
-      $('.grid').append(posts);
-
-      var lazyLoadInstance = new LazyLoad({
-        elements_selector: '.lazy'
-      })
-
-      $load_posts_button.text('Load more');
-      pagination_next_page_number++;
-
-      if (pagination_next_page_number > pagination_available_pages_number) {
-        loadMore.addClass('hide');
-      }
+  if (lightense) {
+    Lightense(".page img:not(.no-lightense), .post img:not(.no-lightense)", {
+    padding: 60,
+    offset: 30
     });
-  });
+  };
 
 
   /* =======================
   // Responsive Videos
   ======================= */
-  $(".post__content, .page__content").fitVids({
-    customSelector: ['iframe[src*="ted.com"]', 'iframe[src*="player.twitch.tv"]', 'iframe[src*="facebook.com"]']
-  });
+  reframe(".post__content iframe:not(.reframe-off), .page__content iframe:not(.reframe-off)");
 
 
-  /* =======================
-  // Zoom Image
-  ======================= */
-  $(".page img, .post img").attr("data-action", "zoom");
-  $(".page a img, .post a img").removeAttr("data-action", "zoom");
+  // =====================
+  // Load More Posts
+  // =====================
+  var load_posts_button = document.querySelector('.load-more-posts');
+
+  load_posts_button&&load_posts_button.addEventListener("click",function(e){e.preventDefault();var o=document.querySelector(".load-more-section"),e=pagination_next_url.split("/page")[0]+"/page/"+pagination_next_page_number+"/";fetch(e).then(function(e){if(e.ok)return e.text()}).then(function(e){var n=document.createElement("div");n.innerHTML=e;for(var t=document.querySelector(".grid"),a=n.querySelectorAll(".grid__post"),i=0;i<a.length;i++)t.appendChild(a.item(i));new LazyLoad({elements_selector:".lazy"});pagination_next_page_number++,pagination_next_page_number>pagination_available_pages_number&&(o.style.display="none")})});
 
 
   /* =======================
   // Scroll Top Button
   ======================= */
-  $(".top").click(function() {
-    $("html, body")
-      .stop()
-      .animate({ scrollTop: 0 }, "slow", "swing");
+  window.addEventListener("scroll", function () {
+  window.scrollY > window.innerHeight ? btnScrollToTop.classList.add("is-active") : btnScrollToTop.classList.remove("is-active");
   });
-  $(window).scroll(function() {
-    if ($(this).scrollTop() > $(window).height()) {
-      $(".top").addClass("is-active");
-    } else {
-      $(".top").removeClass("is-active");
+
+  btnScrollToTop.addEventListener("click", function () {
+    if (window.scrollY != 0) {
+      window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: "smooth"
+      })
     }
   });
 

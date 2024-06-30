@@ -19,7 +19,7 @@
               <div class="article__inner">
 
                 {% if post.featured %}
-                <span class="featured-post ion ion-ios-star-outline"></span>
+                <span class="featured-post fa-regular fa-star"></span>
                 {% endif %}
 
                 {% if post.image %}
@@ -51,21 +51,21 @@
 
                   <div class="article__bottom">
 
-                    {% if site.author.avatar %}
+                    {% if site.data.settings.author.avatar %}
                     <div class="article__author">
-                      <a href="{{site.baseurl}}/about/" aria-label="{{site.author.name}}"><img class="article__author-image lazy" data-src="{{site.baseurl}}{{site.author.avatar}}" alt="{{site.author.name}}'s Picture"></a>
+                      <a href="{{ site.baseurl }}/about/" aria-label="{{ site.data.settings.author.name }}"><img class="article__author-image lazy" data-src="{{ site.baseurl }}{{ site.data.settings.author.avatar }}" alt="{{ site.data.settings.author.name }}'s Picture"></a>
                     </div>
                     {% endif %}
 
                     <div class="article__bottom-meta">
-                      {% if site.author.name %}
-                        <a href="{{site.baseurl}}/about/" class="article__author-link">{{site.author.name}}</a>
+                      {% if site.data.settings.author.name %}
+                        <a href="{{ site.baseurl }}/about/" class="article__author-link">{{ site.data.settings.author.name }}</a>
                       {% endif %}
                       {% if post.tags.size >= 1 %}
                       <span>in</span>
                       <span class="article-tags">
                         {% for tag in post.tags %}
-                          <a href="{{ site.baseurl }}/tag/{{ tag }}" class="article__tag">{{ tag }}</a>
+                          <a href="{{ site.baseurl }}/tags/?tag={{ tag | downcase | url_encode }}" class="article__tag">{{ tag }}</a>
                         {% endfor %}
                       </span>
                       {% endif %}

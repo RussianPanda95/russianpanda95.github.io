@@ -14,19 +14,19 @@
 
       <div class="logo">
         <a class="logo__link" href="{{ site.baseurl }}/">
-        {%if site.logo %}
-          <img class="logo__image" src="{{ site.baseurl }}{{ site.logo }}" alt="{{ site.title }}">
+        {% if site.data.settings.logo %}
+          <img class="logo__image" src="{{ site.data.settings.logo | relative_url }}" alt="{{ site.data.settings.title }}">
         {% else %}
-          {{ site.title }}
+          {{ site.data.settings.title }}
         {% endif %}
         </a>
       </div>
-        
+
       <div class="menu-overlay">
         <nav class="main-nav">
           <div class="main-nav__box">
             <div class="nav__icon-close">
-              <i class="ion ion-md-close"></i>
+              <i class="fa-solid fa-xmark"></i>
             </div>
             <div class="nav-grid">
               <div class="nav-grid__item">
@@ -47,9 +47,9 @@
       </div>
 
       <div class="nav-buttons">
-        <i class="nav__icon nav__icon-menu ion ion-md-menu"></i>
+        <i class="nav__icon nav__icon-menu fa-solid fa-bars"></i>
         <div class="search-button">
-          <i class="nav__icon nav__icon-search ion ion-md-search"></i>
+          <i class="nav__icon nav__icon-search fa-solid fa-magnifying-glass"></i>
           <span>Search</span>
         </div>
       </div>

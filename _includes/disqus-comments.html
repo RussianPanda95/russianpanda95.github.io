@@ -13,7 +13,7 @@
 
 <script>
   function load_disqus() {
-    var disqus_shortname = '{{ site.disqus-identifier }}',
+    var disqus_shortname = '{{ site.data.settings.disqus-identifier }}',
       is_disqus_empty = document.getElementById('disqus_empty'),
       disqus_target = document.getElementById('disqus_thread'),
       disqus_embed = document.createElement('script'),

@@ -8,7 +8,7 @@
     justify-content: center;
     align-items: center;
   }
-  
+
   .social__item {
     display: inline-block;
     margin-left: 8px;
@@ -23,7 +23,7 @@
     align-items: center;
     width: 40px;
     height: 40px;
-    font-size: 16px;
+    font-size: 15px;
     line-height: 40px;
     border-radius: 8px;
     color: $white;
@@ -34,18 +34,19 @@
     }
   }
 
-  @media only screen and (max-width: $desktop) {
-    margin-bottom: 5px;
+  @media (max-width: $desktop) {
+    margin-bottom: 8px;
 
     .social__item {
-      margin-bottom: 10px;
+      margin-bottom: 8px;
     }
+  }
 
+  @media (max-width: $tablet) {
     .social__link {
       width: 30px;
       height: 30px;
       line-height: 30px;
-      font-size: 16px;
     }
   }
 }

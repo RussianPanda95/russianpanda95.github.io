@@ -34,7 +34,7 @@
     top: 50%;
     right: 24px;
     transform: translateY(-50%);
-    font-size: 30px;
+    font-size: 28px;
     line-height: 1;
     color: rgba($text-color, .5);
     transition: all .25s;
@@ -44,11 +44,11 @@
     }
   }
 
-  @media only screen and (max-width: $tablet) {
+  @media (max-width: $tablet) {
     width: 80%;
     padding-top: 100px;
   }
-  @media only screen and (max-width: $mobile) {
+  @media (max-width: $mobile) {
     width: 90%;
   }
 }
@@ -87,7 +87,7 @@
       background: $dark;
     }
 
-    @media only screen and (max-width: $mobile) {
+    @media (max-width: $mobile) {
       font-size: 26px;
     }
   }

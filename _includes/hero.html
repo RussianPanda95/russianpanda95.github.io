@@ -1,0 +1,32 @@
+<!-- begin hero -->
+{% if site.data.settings.hero.image %}
+<section class="hero">
+  <div class="hero__inner">
+    <div class="hero__image">
+      <img class="lazy" data-src="{{ site.data.settings.hero.image | relative_url }}" alt="{{ site.data.settings.hero.title }}">
+    </div>
+    <div class="hero__content">
+      {% if site.data.settings.hero.title %}
+        <h1 class="hero__title">{{ site.data.settings.hero.title }}</h1>
+      {% endif %}
+      {% if site.data.settings.hero.description %}
+        <p class="hero__desc">{{ site.data.settings.hero.description }}</p>
+      {% endif %}
+    </div>
+  </div>
+</section>
+{% else %}
+<section class="hero-without-image">
+  <div class="hero-inner">
+    <div class="hero__content">
+      {% if site.data.settings.hero.title %}
+        <h1 class="hero__title">{{ site.data.settings.hero.title }}</h1>
+      {% endif %}
+      {% if site.data.settings.hero.description %}
+        <p class="hero__desc">{{ site.data.settings.hero.description }}</p>
+      {% endif %}
+    </div>
+  </div>
+</section>
+{% endif %}
+<!-- begin hero -->

@@ -8,7 +8,7 @@
     {% for post in site.posts limit:2 %}
     <div class="recent-posts">
       {% if post.image %}
-      <a class="recent-posts__image" href="{{ post.url }}"><img class="lazy" data-src="{{site.baseurl}}{{post.image}}" alt="{{post.title}}"></a>
+      <a class="recent-posts__image" href="{{ post.url | relative_url }}"><img class="lazy" data-src="{{ post.image | relative_url }}" alt="{{ post.title }}"></a>
       {% endif %}
       <div class="recent-posts__content">
         <div class="article__meta">
@@ -23,13 +23,13 @@
           <time class="article__date"
             datetime="{{ post.date | date_to_xmlschema }}">{% assign date_format = site.minima.date_format | default: "%b %-d, %Y" %}{{ post.date | date: date_format }}</time>
         </div>
-        <h4 class="recent-posts__title"><a href="{{ post.url }}">{{ post.title }}</a></h4>
+        <h4 class="recent-posts__title"><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h4>
         <div class="article__bottom">
           <div class="article__author">
-            <a href="{{site.baseurl}}/about/" aria-label="{{site.author.name}}"><img class="article__author-image lazy" data-src="{{site.baseurl}}{{site.author.avatar}}" alt="{{site.author.name}}'s Picture"></a>
+            <a href="{{ '/about/' | relative_url }}" aria-label="{{ site.data.settings.author.name }}"><img class="article__author-image lazy" data-src="{{ site.data.settings.author.avatar | relative_url }}" alt="{{ site.data.settings.author.name }}'s Picture"></a>
           </div>
           <div class="article__bottom-meta">
-            <a href="{{site.baseurl}}/about/" class="article__author-link">{{site.author.name}}</a>
+            <a href="{{ '/about/' | relative_url }}" class="article__author-link">{{ site.data.settings.author.name }}</a>
           </div>
         </div>
       </div>

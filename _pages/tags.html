@@ -1,0 +1,48 @@
+---
+layout: default
+title: Tags
+permalink: /tags/
+---
+{% capture site_tags %}{% for tag in site.tags %}{{ tag | first }}{% unless forloop.last %},{% endunless %}{% endfor %}{% endcapture %}
+{% assign tag_words = site_tags | split:',' | sort %}
+
+{% for item in (0..site.tags.size) %}{% unless forloop.last %}
+{% capture this_word %}{{ tag_words[item] | strip_newlines }}{% endcapture %}
+
+<div class="tags is-hidden" id="{{ this_word | downcase | url_decode }}">
+
+  <div class="container">
+    <div class="row">
+      <div class="col col-12">
+        <div class="archive-box">
+          <span class="archive-meta">{{ site.tags[this_word].size }} {% if site.tags[this_word].size < 2 %}post {% else %}posts{% endif %} tagged</span>
+          <h1 class="archive-title">{{ this_word }}</h1>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container animate">
+    <div class="row">
+      {% for post in site.tags[this_word] %}
+        {% if post.title != null %}
+         {% include article-content.html %}
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+
+</div>
+
+{% endunless %}
+{% endfor %}
+
+<script>
+  var tag_name = decodeURIComponent(window.location.search.split('=')[1]);
+  if (tag_name) {
+    var el = document.getElementById(tag_name);
+    if (el) {
+      el.classList.remove("is-hidden");
+    }
+  }
+</script>
