@@ -5,7 +5,7 @@ description: MetaStealer Part 2 Malware Analysis
 date: 2023-12-29 00:01:35 +0300
 image: '/images/MetaStealerPart2/cookie_stealers.jpeg'
 tags:   [.NET, stealer]
-featured: true
+featured: false
 ---
 
 # Stealer's World of Drama
