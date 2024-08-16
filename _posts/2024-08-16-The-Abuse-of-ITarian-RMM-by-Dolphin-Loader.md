@@ -267,7 +267,7 @@ From the script above we can observe the following:
 
 - The script initially checks if it is executing with administrative privileges by utilizing the **IsUserAnAdmin()** function from the Windows API. If it detects that it is running without these privileges, it attempts to restart itself with elevated rights. This elevation process is achieved by invoking the **ShellExecuteW** function from the Windows Shell API, using the "runas". This prompts the User Account Control (UAC) to ask the user for permission to run the script as an administrator.
 
-- The script retrieves a ZIP archive from comodozeropoint.com/Updates/1736162964/23/Salome[.]zip, extracts the content of the archive (an AutoIt executable and the malicious script name script.a3x) under the %TEMP% folder and executes an AutoIt file. We will look at the obfuscation of the AutoIt scripts later in this blog. 
+- The script retrieves a ZIP archive from **comodozeropoint.com/Updates/1736162964/23/Salome[.]zip**, extracts the content of the archive (an AutoIt executable and the malicious script name script.a3x) under the %TEMP% folder and executes an AutoIt file. We will look at the obfuscation of the AutoIt scripts later in this blog. 
 
 - After the execution of the AutoIt file, the script sleeps for a minute before removing the ZIP archive and the extracted files. 
 
@@ -683,10 +683,28 @@ Blue teamers should monitor for the execution of suspicious AutoIt scripts and p
 
 | Name | Indicators |
 | ---- | ---- |
-| GlorySprout | 3952a294b831e8738f70c2caea5e0559 |
-| C2 | 147.78.103.197 |
-| C2 | 45.138.16.167 |
-| GlorySprout | d295c4f639d581851aea8fbcc1ea0989 |
+| Aunteficator_em_BHdAOse8_installer_Win7-Win11_x86_x64.msi | f740670bd608f6a564366606e0bba8da |
+| em_Kia5weA1_installer_Win7-Win11_x86_x64.msi | a295cf96ebabdfa1d30424e72ed6d4df |
+| em_8azU2ahn_installer_Win7-Win11_x86_x64.msi | a2b4081e6ac9d7ff9e892494c58d6be1 |
+| Salome.zip | 5b295738eaf3c6aa623e2699f6d79e3a |
+| script.a3x (Salome.zip)  | a504ca75b88e18b18509cb44acb27631 |
+| Core.zip | 8259de1408aae0f9ddeb85b2f47cfa30 |
+| script.a3x (Core.zip)  | 91584a4b3f28029ecdfb9f04e3cc801f |
+| Rhadamanthys | f227b281d745d53fcb06fe2bf7de7d26 |
+| DarkGate loader  | a674a4ac02d85b5b208f17a5b5655c30 |
+| Rhadamanthys C2 | 95.217.44.124 |
+| SectopRAT | 45.141.87.55 |
+| LummaC2 | quialitsuzoxm[.]shop |
+| LummaC2 | complaintsipzzx[.]shop |
+| LummaC2 | mennyudosirso[.]shop |
+| LummaC2 | pieddfreedinsu[.]shop |
+| LummaC2 | languagedscie[.]shop |
+| LummaC2 | bassizcellskz[.]shop  |
+| updater.py | d01de188808d566745d1ce888b431910 |
+| autocrypt.ini | 0f8f5de30b3560e08fcbfdb8e740748d |
+| RMM instance URL | richardmilliestpe.itsm-us1.comodo[.]com |
+| RMM instance URL | itstrq.itsm-us1.comodo[.]com |
+
 
 # Reference
 
