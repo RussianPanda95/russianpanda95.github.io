@@ -681,15 +681,13 @@ Blue teamers should monitor for the execution of suspicious AutoIt scripts and p
 
 # Indicators of Compromise
 
-| Name  | Indicators                       |
-| ----- | -------------------------------- |
-| test  | test                             |
-| C2    | 147.78.103.197                   |
-| C2    | 45.138.16.167                    |
-| tesrt | d295c4f639d581851aea8fbcc1ea0989 |
-|       |                                  |
-|       |                                  |
-|       |                                  |
+| Name | Indicators |
+| ---- | ---- |
+| GlorySprout | 3952a294b831e8738f70c2caea5e0559 |
+| C2 | 147.78.103.197 |
+| C2 | 45.138.16.167 |
+| GlorySprout | d295c4f639d581851aea8fbcc1ea0989 |
+
 # Reference
 
 [https://unprotect.it/technique/easycrypter/](https://unprotect.it/technique/easycrypter/)
