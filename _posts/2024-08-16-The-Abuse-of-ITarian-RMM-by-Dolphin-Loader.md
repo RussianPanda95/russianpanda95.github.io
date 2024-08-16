@@ -13,7 +13,7 @@ A few days ago I was looking at the sample from Dolphin Loader and couldn't unde
 
 Before looking into the abuse of ITarian RMM software, we should talk a little bit about Dolphin Loader.
 
-Dolphin Loader is a new Malware-as-a-Service loader that first went on sale in July 2024 on Telegram.
+Dolphin Loader is a new Malware-as-a-Service loader that first went on sale in July 2024 on Telegram. The loader has been observed to deliver various malware such as SectopRAT, LummaC2 and Redline via drive-by downloads.
 
 The Dolphin Loader claims to bypass SmartScreen because it is signed with an EV (Extended Validation) certificate, Chrome alert and EDR. The seller also offers EasyCrypt services for LummaC2 Stealer users. EasyCrypt, also known as EasyCrypter, is a crypter service sold on Telegram for x86 .NET/Native files. I previously wrote a Yara rule for the crypter for UnprotectProject, which you can access [here](https://unprotect.it/technique/easycrypter/).
 
