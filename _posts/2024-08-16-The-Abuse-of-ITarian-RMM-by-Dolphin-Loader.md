@@ -73,7 +73,7 @@ The downloaded MSI file would be approximately 96MB in size and the naming conve
 
 After the successful installation of the software, the dependencies and files will be dropped under either **C:\Program Files (x86)\ITarian** or **C:\Program Files\COMODO**, the **token.ini** file (the file is deleted after successfully retrieving the instance address) contains the token value that the client will use to obtain the instance address, for example **zeus14-msp.itsm-us1.comodo.com** (from the testing case above). 
 
-For blue teamers while looking for suspicious activities for ITarian RMM client, you should log for the contents of the **RmmService.log** file under **ITarian\Endpoint Manager\rmmlogs** or **COMODO\Endpoint Manager\rmmlogs**. The log file would provide great insights into what procedures or scripts were ran on the host and their configurations. 
+For blue teamers while looking for suspicious activities for ITarian RMM client, you should look for the contents of the **RmmService.log** file under **ITarian\Endpoint Manager\rmmlogs** or **COMODO\Endpoint Manager\rmmlogs**. The log file would provide great insights into what procedures or scripts were ran on the host and their configurations. 
 
 ![rmmservicelogfile.JPG](/images/DolphinLoader/rmmservicelogfile.JPG)
 
