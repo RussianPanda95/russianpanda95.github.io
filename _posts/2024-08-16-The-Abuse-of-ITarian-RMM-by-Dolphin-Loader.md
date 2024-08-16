@@ -79,7 +79,7 @@ For blue teamers while looking for suspicious activities for ITarian RMM client,
 
 From the screenshot above we can see the **repeat: NEVER**, which means that the script will only run one time when the endpoint device is enrolled. 
 
-Now let's inspect the log file from out malicious sample. We can see two scripts present.
+Now let's inspect the log file from our malicious sample. We can see two scripts present.
 
 The first script is named "st3", executes only once - when the device is first registered. 
 
